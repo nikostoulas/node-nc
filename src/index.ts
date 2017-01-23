@@ -27,7 +27,7 @@ async function transformResult(cmd, localContext) {
   let newCmd = cmd;
   let match;
   while ((match = yieldableRegex.exec(cmd)) !== null) {
-    localContext[i] = await vm.runInThisContext(match[1])
+    localContext[i] = await vm.runInThisContext(match[1]);
     newCmd = newCmd.replace(match[0], `localContext[${i}]`);
     i++;
   }
@@ -67,8 +67,8 @@ fs.readFileSync(history)
   .split(`\n`)
   .reverse()
   .filter(line => line.trim())
-  .map(line => (<any>server).history.push(line))
+  .map(line => (<any>server).history.push(line));
 
 process.on('exit', function () {
-  fs.appendFileSync(history, (<any>server).lines.join('\n') + '\n')
+  fs.appendFileSync(history, (<any>server).lines.join('\n') + '\n');
 });
