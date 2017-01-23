@@ -2,8 +2,6 @@
 import * as repl from 'repl';
 import * as vm from 'vm';
 import * as fs from 'fs';
-import { install } from 'source-map-support';
-install();
 const history = '.node_history';
 
 const hasPackage = fs.existsSync('./package.json');
