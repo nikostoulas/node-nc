@@ -2,7 +2,7 @@ import Config from './config';
 import * as fs from 'fs';
 import * as path from 'path';
 import { root, isInNodeProject } from './handle-package';
-import { uniqueKeepLatest } from './helper';
+import { uniqueKeepLatest } from './helpers';
 import * as os from 'os';
 
 function getHistoryPath() {

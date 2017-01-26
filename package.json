@@ -9,8 +9,8 @@
     "profiler"
   ],
   "scripts": {
-    "build": "tsc -p .",
-    "watch": "tsc -w -p .",
+    "build": "rm -rf ./build && tsc -p .",
+    "watch": "rm -rf ./build && tsc -w -p .",
     "prepublish": "npm run build && npm test",
     "pretest": "tslint src/*.ts && npm run build",
     "test": "istanbul test ./node_modules/.bin/_mocha build/test/**.js --  -R spec",

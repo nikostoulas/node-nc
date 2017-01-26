@@ -1,4 +1,4 @@
-import { compact, convertBoolean } from './helper';
+import { compact, convertBoolean } from './helpers';
 
 const defaultConf = {
   useGlobal: false,
