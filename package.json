@@ -25,7 +25,9 @@
   "engines": {
     "node": ">=6.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "glob": "^7.1.1"
+  },
   "typings": "build/index",
   "devDependencies": {
     "@types/log4js": "0.0.32",
