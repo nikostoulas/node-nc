@@ -5,7 +5,7 @@ const defaultConf = {
   useAsync: true,
   globalizeFiles: true,
   globalizeDependencies: true,
-  useConsoleFile: true,
+  useNcFile: true,
   usePackageFile: true,
   writeHistoryFile: true,
   historyFileName: '.node_history'
@@ -16,7 +16,7 @@ const envConf = compact(convertBoolean({
   useAsync: process.env.NC_USE_ASYNC,
   globalizeFiles: process.env.NC_GLOBALIZE_FILES,
   globalizeDependencies: process.env.NC_GLOBALIZE_DEPENDENCIES,
-  useConsoleFile: process.env.NC_USE_CONSOLE_FILE,
+  useNcFile: process.env.NC_USE_NC_FILE,
   usePackageFile: process.env.NC_USE_PACKAGE_FILE,
   writeHistoryFile: process.env.NC_WRITE_HISTORY_FILE,
   historyFileName: process.env.NC_HISTORY_FILE_NAME

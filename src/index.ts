@@ -2,11 +2,11 @@
 import * as fs from 'fs';
 import { root } from './handle-package';
 import handleHistory from './handle-history';
-import importConsole from './import-console';
+import importNc from './import-nc';
 import globalizeFiles from './globalize-files';
 import createServer from './create-server';
 
-importConsole();
+importNc();
 
 const server = createServer();
 

@@ -4,8 +4,8 @@ import * as path from 'path';
 import { root } from './handle-package';
 
 export default function () {
-  if (Config.config.useConsoleFile) {
-    if (fs.existsSync('./console.js')) {
+  if (Config.config.useNcFile) {
+    if (fs.existsSync('./nc.js')) {
       (<any>global).setConfig = Config.setConfig.bind(Config);
       require(path.join(root, 'console.js'));
     }
