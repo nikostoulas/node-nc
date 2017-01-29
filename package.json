@@ -1,7 +1,7 @@
 {
   "name": "node-nc",
   "version": "0.0.3",
-  "description": "Node console. Making life simpler with smart defaults.",
+  "description": "Node console. A rails inspired command line for node.",
   "main": "build/index.js",
   "keywords": [
     "console",
