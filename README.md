@@ -1,8 +1,9 @@
-# Node Console
 ```
-                __
-|\| _  _| _    /   _ __  _  _  |  _
-| |(_)(_|(/_   \__(_)| |_> (_) | (/_
+.  .       .        ,-.                 .
+|\ |       |       /                    |
+| \| ,-. ,-| ,-.   |    ,-. ;-. ,-. ,-. | ,-.
+|  | | | | | |-'   \    | | | | `-. | | | |-'
+'  ' `-' `-' `-'    `-' `-' ' ' `-' `-' ' `-'
 
 ```
 
@@ -11,8 +12,8 @@
 This module extends Node.js basic repl functionality:
 
 * Makes all js files global
-* Makes all packages included in package.json global
-* Awaits promises (not perfect yet).
+* Makes all modules included in package.json global
+* Awaits promises (experimental).
 * Writes commands to a local history file.
 * Configurable behavior using env variables or a nc.js file.
 
@@ -30,7 +31,7 @@ Enter `nc` to use the console.
 const defaultConf = {
   useGlobal: false, // Repl useGlobal. If set to true all globals will be inside nc namespace.
   useAsync: true, // Experimental use of await in repl.
-  globalizeFiles: true, // Make all project files global. 
+  globalizeFiles: true, // Make all project files global.
   globalizeDependencies: true, // Globalize projects dependencies.
   useNcFile: true, // Use nc.js file if found
   usePackageFile: true, // Use package file to determine prompt, root folter and dependencies.
