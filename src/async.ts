@@ -8,10 +8,15 @@ export default async function (cmd: string, context: any) {
     let newCmd = cmd;
     let match;
     while ((match = yieldableRegex.exec(cmd)) !== null) {
-      context.localContext[i] = Config.config.useGlobal ?
-        await vm.runInThisContext(match[1]) :
-        await vm.runInContext(match[1], context);
-      newCmd = newCmd.replace(match[0], `localContext[${i}]`);
+      try {
+        context.localContext[i] = Config.config.useGlobal ?
+          await vm.runInThisContext(match[1]) :
+          await vm.runInContext(match[1], context);
+        newCmd = newCmd.replace(match[0], `localContext[${i}]`);
+      } catch (e) {
+        context.localContext[i] = () => { throw e; };
+        newCmd = newCmd.replace(match[0], `localContext[${i}]()`);
+      }
       i++;
     }
     return newCmd;
