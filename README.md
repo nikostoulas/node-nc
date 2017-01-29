@@ -27,7 +27,7 @@ This module extends Nodejs basic repl functionality
 install it using `npm install -g node-nc`
 Enter `nc` to use the console.
 
-[![asciicast](https://asciinema.org/a/aoqwc7slbl11o37tvnyg0lvh1.png)](https://asciinema.org/a/aoqwc7slbl11o37tvnyg0lvh1)
+![nc](https://raw.githubusercontent.com/nikostoulas/node-nc/master/usage.gif)]
 
 ## Configuration
 
@@ -47,8 +47,8 @@ const defaultConf = {
 * Configuration can be overwitten by env variables:
   NC_USE_GLOBAL, NC_USE_ASYNC, NC_GLOBALIZE_FILES,
   NC_GLOBALIZE_DEPENDENCIES, NC_USE_NC_FILE, NC_USE_PACKAGE_FILE,
-  NC_WRITE_HISTORY_FILE, NC_HISTORY_FILE_NAME
-* or by using an nc.js file. This file can also be used to make some project initializations
+  NC_WRITE_HISTORY_FILE, NC_HISTORY_FILE_NAME or
+* by using an nc.js file. This file can also be used to make some project initializations
 Eg. connect to a database, eclare some global vars etc.
 In nc.js a method setConfig(options) is available to overwrite the default configurations.
 Note that NC_USE_NC_FILE env variable must not be false.
