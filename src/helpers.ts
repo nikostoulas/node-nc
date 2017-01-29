@@ -15,7 +15,7 @@ export function convertBoolean(obj) {
       converted[key] = true;
     } else if (obj[key] === 'false') {
       converted[key] = false;
-    } else {
+    } else if (obj[key]) {
       converted[key] = obj[key];
     }
   }

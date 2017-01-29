@@ -18,7 +18,7 @@ function init() {
       root = path.join(root, '..');
     } else {
       isInNodeProject = true;
-      packageJson = require(path.join(root, 'package.json'))
+      packageJson = require(path.join(root, 'package.json'));
       return name = packageJson.name + '> ';
     }
   } while (root !== path.sep);

@@ -1,6 +1,6 @@
 import Config from './config';
 import * as glob from 'glob';
-import { root, packageJson } from './handle-package';
+import { root, packageJson, isInNodeProject } from './handle-package';
 import * as path from 'path';
 import { camelCase } from './helpers';
 
@@ -18,13 +18,14 @@ export default function (server) {
     globalizeFiles(context);
   }
 
-  if (Config.config.globalizeDependencies) {
+  if (Config.config.globalizeDependencies && isInNodeProject) {
     globalizeDependencies(context);
   }
 
 }
 
 function globalize(context, name, path) {
+  name = camelCase(name);
   if (name && !global[name]) {
     Object.defineProperty(context, `$${name}$`, {
       enumerable: false, configurable: true, get: function () {
@@ -46,16 +47,19 @@ function globalize(context, name, path) {
 }
 
 function globalizeFiles(context) {
-  glob('**/*.js', { ignore: '**/node_modules/**', cwd: root }, function (err, files) {
+  glob('**/*.js', { ignore: '**/node_modules/**', cwd: root }, function (err, files = []) {
+    if (err) {
+      return err;
+    }
     const filenameRegexp = new RegExp('^\/?(?:.+\/)*(.+)\\.(?:.+)$');
     files.forEach(f => {
-      const filename = camelCase(filenameRegexp.exec(f)[1]);
-      globalize(context, filename, path.join(root, filename));
+      const filename = filenameRegexp.exec(f)[1];
+      globalize(context, filename, path.join(root, f));
     });
   });
 }
 
 function globalizeDependencies(context) {
-  const files = [...Object.keys(packageJson.dependencies), ...Object.keys(packageJson.devDependencies)];
-  files.forEach(f => globalize(context, f, f));
+  const files = [...Object.keys(packageJson.dependencies || {}), ...Object.keys(packageJson.devDependencies || {})];
+  files.forEach(f => globalize(context, f, path.join(root, 'node_modules', f)));
 }
