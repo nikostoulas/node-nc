@@ -1,39 +1,61 @@
 import Config from './config';
 import * as glob from 'glob';
-import { root } from './handle-package';
+import { root, packageJson } from './handle-package';
 import * as path from 'path';
+import { camelCase } from './helpers';
 
 export default function (server) {
-  if (Config.config.globalizeFiles) {
-    glob('**/*.js', { ignore: '**/node_modules/**', cwd: root }, function (err, files) {
-      const filenameRegexp = new RegExp('^\/?(?:.+\/)*(.+)\\.(?:.+)$');
-      let context = server.context;
-      if (Config.config.useGlobal) {
-        context.g = {};
-        context = context.g;
-      }
-      files.forEach(f => {
-        const filename = filenameRegexp.exec(f)[1];
-        if (filename && !global[filename]) {
-          Object.defineProperty(context, `$${filename}$`, {
-            enumerable: false, configurable: true, get: function () {
-              return path.join(root, f);
-            }
-          });
+  server.context.reload = () => {
+    Object.keys(require.cache).forEach((key) => delete require.cache[key]);
+  };
+  let context = server.context;
+  if (Config.config.useGlobal) {
+    context.nc = {};
+    context = context.nc;
+  }
 
-          Object.defineProperty(context, filename, {
-            enumerable: false, configurable: true, get: function () {
-              let required = require(path.join(root, f));
-              if (required.default) {
-                let tmp = required;
-                required = required.default;
-                Object.assign(required, tmp);
-              }
-              return required;
-            }
-          });
+  if (Config.config.globalizeFiles) {
+    globalizeFiles(context);
+  }
+
+  if (Config.config.globalizeDependencies) {
+    globalizeDependencies(context);
+  }
+
+}
+
+function globalize(context, name, path) {
+  if (name && !global[name]) {
+    Object.defineProperty(context, `$${name}$`, {
+      enumerable: false, configurable: true, get: function () {
+        return path;
+      }
+    });
+    Object.defineProperty(context, name, {
+      enumerable: false, configurable: true, get: function () {
+        let required = require(path);
+        if (required.default) {
+          let tmp = required;
+          required = required.default;
+          Object.assign(required, tmp);
         }
-      });
+        return required;
+      }
     });
   }
+}
+
+function globalizeFiles(context) {
+  glob('**/*.js', { ignore: '**/node_modules/**', cwd: root }, function (err, files) {
+    const filenameRegexp = new RegExp('^\/?(?:.+\/)*(.+)\\.(?:.+)$');
+    files.forEach(f => {
+      const filename = camelCase(filenameRegexp.exec(f)[1]);
+      globalize(context, filename, path.join(root, filename));
+    });
+  });
+}
+
+function globalizeDependencies(context) {
+  const files = [...Object.keys(packageJson.dependencies), ...Object.keys(packageJson.devDependencies)];
+  files.forEach(f => globalize(context, f, f));
 }

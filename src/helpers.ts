@@ -27,3 +27,7 @@ export function uniqueKeepLatest(array) {
   rev = rev.filter((line, index) => rev.findIndex(l => l === line) === index);
   return rev.reverse();
 }
+
+export function camelCase(str: string) {
+  return str.replace(/-(\w)/g, (_, w: string) => w.toUpperCase());
+}
