@@ -38,7 +38,7 @@ const defaultConf = {
   useAsync: true, // Experimental use of await in repl.
   globalizeFiles: true, // Make all project files global.
   globalizeDependencies: true, // Globalize projects dependencies.
-  useNcFile: true, // Use nc.js file if found
+  useNcFile: true, // Use nc.js file if it exists.
   usePackageFile: true, // Use package file to determine prompt, root folter and dependencies.
   writeHistoryFile: true, // Write all commands to a file.
   historyFileName: '.node_history' // The history filename. An absolute path can also be given.
@@ -52,11 +52,9 @@ Configuration can be overwitten
   NC_USE_GLOBAL, NC_USE_ASYNC, NC_GLOBALIZE_FILES,
   NC_GLOBALIZE_DEPENDENCIES, NC_USE_NC_FILE, NC_USE_PACKAGE_FILE,
   NC_WRITE_HISTORY_FILE, NC_HISTORY_FILE_NAME or
-* by using an nc.js file. This file can also be used to make some project initializations
-
+* by using an nc.js file. This file can also be used to make some project initializations  
   Eg. connect to a database, declare some global vars etc.
   In nc.js a method setConfig(options) is available to overwrite the default configurations.
-
   Note that NC_USE_NC_FILE env variable must not be false.
 
   Eg:
