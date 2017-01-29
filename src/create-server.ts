@@ -1,7 +1,7 @@
 import * as repl from 'repl';
 import * as vm from 'vm';
 import Config from './config';
-import handleAsync from './async';
+import parseAsync from './parse-async';
 import { name } from './handle-package';
 
 export default function (prompt = name) {
@@ -13,8 +13,7 @@ export default function (prompt = name) {
     useGlobal: Config.config.useGlobal,
     eval: async function (cmd, context, filename, callback) {
       try {
-        context.localContext = [];
-        const newCmd = await handleAsync(cmd, context);
+        const newCmd = await parseAsync(cmd, context);
         const result = Config.config.useGlobal ?
           vm.runInThisContext(newCmd) :
           vm.runInContext(newCmd, context);

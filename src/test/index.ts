@@ -1,10 +1,4 @@
 import { install } from 'source-map-support';
+import 'should';
 
 install();
-
-(<any>global).logger = {
-  info: () => ({}),
-  debug: () => ({}),
-  warn: () => ({}),
-  error: () => ({})
-};
