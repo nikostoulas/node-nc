@@ -5,9 +5,14 @@ import * as path from 'path';
 import { camelCase } from './helpers';
 
 export default function (server) {
+  if (!isInNodeProject) {
+    return;
+  }
+
   server.context.reload = () => {
     Object.keys(require.cache).forEach((key) => delete require.cache[key]);
   };
+
   let context = server.context;
   if (Config.config.useGlobal) {
     context.nc = {};
@@ -18,7 +23,7 @@ export default function (server) {
     globalizeFiles(context);
   }
 
-  if (Config.config.globalizeDependencies && isInNodeProject) {
+  if (Config.config.globalizeDependencies) {
     globalizeDependencies(context);
   }
 

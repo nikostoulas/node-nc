@@ -9,7 +9,7 @@
 
 ## About
 
-This module extends Node.js basic repl functionality:
+This module extends Node.js [basic repl](https://nodejs.org/api/repl.html) functionality:
 
 * Makes all js files global
 * Makes all modules included in package.json global
@@ -17,11 +17,16 @@ This module extends Node.js basic repl functionality:
 * Writes commands to a local history file.
 * Configurable behavior using env variables or a nc.js file.
 
+## Installation
+
+`npm install -g node-nc`
+
 ## Usage
 
-install it using `npm install -g node-nc`
+Enter `nc` to enter the repl.
+It is intended to be used inside  Node.js projects. The nc command can also be invoked from a projects subfolder.
+If used outside a project it will be like it was used in the users home folder and will not globalize any file.
 
-Enter `nc` to use the console.
 
 ![nc](https://raw.githubusercontent.com/nikostoulas/node-nc/master/usage.gif)]
 
@@ -36,7 +41,7 @@ const defaultConf = {
   useNcFile: true, // Use nc.js file if found
   usePackageFile: true, // Use package file to determine prompt, root folter and dependencies.
   writeHistoryFile: true, // Write all commands to a file.
-  historyFileName: '.node_history' // The filename. An absolute path can be given.
+  historyFileName: '.node_history' // The history filename. An absolute path can also be given.
 };
 ```
 
