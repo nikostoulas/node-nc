@@ -17,7 +17,8 @@
     "posttest": "remap-istanbul -i coverage/coverage.json -o coverage/lcov-report -t html"
   },
   "bin": {
-    "nc": "build/index.js"
+    "nc": "build/index.js",
+    "node-nc": "build/index.js"
   },
   "repository": "nikostoulas/node-nc",
   "author": "Nikos Kostoulas <nikostoulas@gmail.com>",
