@@ -12,14 +12,14 @@
     "build": "rm -rf ./build && tsc -p .",
     "watch": "rm -rf ./build && tsc -w -p .",
     "prepublish": "npm run build && npm test",
-    "//pretest": "tslint src/*.ts && npm run build",
+    "pretest": "tslint src/*.ts && npm run build",
     "test": "istanbul test ./node_modules/.bin/_mocha build/test -- --recursive -R spec",
     "posttest": "remap-istanbul -i coverage/coverage.json -o coverage/lcov-report -t html"
   },
   "bin": {
     "nc": "build/index.js"
   },
-  "repository": "nikostoulas/node-c",
+  "repository": "nikostoulas/node-nc",
   "author": "Nikos Kostoulas <nikostoulas@gmail.com>",
   "license": "MIT",
   "engines": {
