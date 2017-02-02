@@ -7,7 +7,7 @@ export default function () {
   if (Config.config.useNcFile) {
     if (fs.existsSync('./nc.js')) {
       (<any>global).setConfig = Config.setConfig.bind(Config);
-      require(path.join(root, 'console.js'));
+      require(path.join(root, 'nc.js'));
     }
   }
 }

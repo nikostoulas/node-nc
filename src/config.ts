@@ -8,7 +8,7 @@ const defaultConf = {
   useNcFile: true,
   usePackageFile: true,
   writeHistoryFile: true,
-  historyFileName: '.node_history'
+  historyFileName: '.nc_history'
 };
 
 const envConf = compact(convertBoolean({

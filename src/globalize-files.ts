@@ -39,13 +39,18 @@ function globalize(context, name, path) {
     });
     Object.defineProperty(context, name, {
       enumerable: false, configurable: true, get: function () {
-        let required = require(path);
-        if (required.default) {
-          let tmp = required;
-          required = required.default;
-          Object.assign(required, tmp);
+        try {
+          let required = require(path);
+
+          if (required.default) {
+            let tmp = required;
+            required = required.default;
+            Object.assign(required, tmp);
+          }
+          return required;
+        } catch (e) {
+          console.error(e);
         }
-        return required;
       }
     });
   }
