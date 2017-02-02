@@ -6,7 +6,8 @@ export default async function (cmd: string, context: any) {
     return cmd;
   }
 
-  const yieldableRegex = /await\s+((?:[a-zA-Z0-9_\.]+)(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\))?)/g;
+  const yieldableRegex = ///await\s+((?:[a-zA-Z0-9_\.]+)(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\))?)/g;
+                         /await\s+([^(),\n\]\[]*(?:\((?:[^()\n]|(?:(?:\([^()]*\))*))*\))*)/g;
   let i = 0;
   let newCmd = cmd;
   let match;
