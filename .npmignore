@@ -3,5 +3,5 @@ typings
 tslint.json
 coverage
 test
-.node_history
+.*
 usage.gif
