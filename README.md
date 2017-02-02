@@ -6,8 +6,42 @@
 '  ' `-' `-' `-'    `-' `-' ' ' `-' `-' ' `-'
 
 ```
-
 ## About
+
+Have you missed a good [repl](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) while developing a Node.js project?  
+Use node-nc to easily configure your project's console (similar to rails c).  
+Just type node-nc in any of your projects folder.
+
+## Installation
+
+```bash
+$ npm install -g node-nc
+```
+
+## Usage
+
+```bash
+$ node-nc // or simply nc
+project-name > async Model.findOne()
+{ _id: 55d4794faea8af4c08396930,
+  key: 'key',
+  payload: 'payload'
+  __v: 0,
+  createdAt: 2015-08-19T12:40:47.175Z }
+project-name >
+project-name > $requestAsPromise$ // module path
+project-name > '/Users/project-name/node_modules/request-as-promise'
+project-name > const result = await requestAsPromise.get('https://jsonplaceholder.typicode.com/test/1')
+project-name > result[0].body
+project-name > '{}'
+```
+
+It is intended to be used inside  Node.js projects. The nc command can also be invoked from a projects subfolder.
+If used outside a project it will not globalize any file and will save history to to `~/.nc_history` (actually: `~/${config.historyFileName}).
+
+![nc](https://raw.githubusercontent.com/nikostoulas/node-nc/master/usage.gif)]
+
+## Details
 
 This module extends Node.js [basic repl](https://nodejs.org/api/repl.html) functionality:
 
@@ -17,18 +51,6 @@ This module extends Node.js [basic repl](https://nodejs.org/api/repl.html) funct
 * Writes commands to a local history file.
 * Configurable behavior using env variables or a nc.js file.
 
-## Installation
-
-`npm install -g node-nc`
-
-## Usage
-
-Enter `nc` or `node-nc` to enter the repl.
-It is intended to be used inside  Node.js projects. The nc command can also be invoked from a projects subfolder.
-If used outside a project it will not globalize any file and will save history to to `~/.nc_history` (actually: `~/${config.historyFileName}).
-
-
-![nc](https://raw.githubusercontent.com/nikostoulas/node-nc/master/usage.gif)]
 
 ## Configuration
 
@@ -57,9 +79,14 @@ Configuration can be overwitten
   In nc.js a method setConfig(options) is available to overwrite the default configurations.
   Note that NC_USE_NC_FILE env variable must not be false.
 
-  Eg:
+  Example of a simple nc.js file:
 
   ```javascript
-    setEnv({useGlobal:true}); // it only overwrites useGlobal config.
+
+    // overwrite useGlobal
+    setEnv({ useGlobal:true });.
+
+    // connect to db
+    mongoose.connect(mongooseDb, options, function (err, data) {});
   ```
 
