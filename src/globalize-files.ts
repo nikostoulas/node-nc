@@ -51,13 +51,17 @@ function globalize(context, name, path) {
         } catch (e) {
           console.error(e);
         }
+      },
+      set: function (value) {
+        delete context[name];
+        delete context[`$${name}$`];
       }
     });
   }
 }
 
 function globalizeFiles(context) {
-  glob('**/*.js', { ignore: '**/node_modules/**', cwd: root }, function (err, files = []) {
+  glob('**/*.js', { ignore: ['**/node_modules/**', '**/test/**'], cwd: root }, function (err, files = []) {
     if (err) {
       return err;
     }
