@@ -11,6 +11,7 @@ export default function (server) {
 
   server.context.reload = () => {
     Object.keys(require.cache).forEach((key) => delete require.cache[key]);
+    return true;
   };
 
   let context = server.context;
