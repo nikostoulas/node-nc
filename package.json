@@ -1,6 +1,6 @@
 {
   "name": "node-nc",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Node console. A rails inspired command line for node.",
   "main": "build/index.js",
   "keywords": [
