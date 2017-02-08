@@ -8,7 +8,7 @@ export default async function profiler(...fns) {
       time = await run(fn, timesInASecond);
       timesInASecond = Math.round(timesInASecond * 1000 / time);
     }
-    console.log(`Run function ${fn} ${timesInASecond.toLocaleString()} times in ${time.toFixed(2)} ms`);
+    console.log(`Function ${fn} ran ${timesInASecond.toLocaleString()} times in ${time.toFixed(2)} ms`);
   }
 }
 

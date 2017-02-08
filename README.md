@@ -89,14 +89,17 @@ Test a function's performance using the buildin profiler.
 The function can return a promise.
 
 The accuracy for sync functions is above 99% when they run less than 1M times/sec.
+
 The accuracy for functions that return a promise is above 99% when they run less than 1K times/sec.
 
-node-nc > profiler(()=> fib(10))
-Run function ()=> fib(10) 40,770 times in 995.99 ms
+```bash
+node-nc> profiler(() => fib(10))
+Function ()=> fib(10) ran 40,770 times in 995.99 ms
 
-node-nc> await profiler(()=> fib(20))
-Run function ()=> fib(20) 328 times in 942.71 ms
+node-nc> await profiler(() => fib(20))
+Function ()=> fib(20) ran 328 times in 942.71 ms
 
-node-nc> await profiler(()=> Promise.resolve(true), ()=>{})
+node-nc> await profiler(() => Promise.resolve(true), () => {})
 Run function ()=> Promise.resolve(true) 171,784 times in 1020.95 ms
 Run function ()=>{} 111,795,737 times in 1007.90 ms
+```
