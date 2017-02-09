@@ -2,10 +2,6 @@ import Config from './config';
 import * as vm from 'vm';
 
 export default async function (cmd: string, context: any) {
-  if (!Config.config.useAsync) {
-    return cmd;
-  }
-
   const yieldableRegex = ///await\s+((?:[a-zA-Z0-9_\.]+)(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\))?)/g;
                          /await[\t\f\v ]+((:?[^(),\n\]\[]*(?:\((?:[^()\n]|(?:(?:\([^()]*\))*))*\))*)+)/g;
   let i = 0;

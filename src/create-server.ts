@@ -13,7 +13,10 @@ export default function (prompt = name) {
     useGlobal: Config.config.useGlobal,
     eval: async function (cmd, context, filename, callback) {
       try {
-        const newCmd = await parseAsync(cmd, context);
+        let newCmd = cmd;
+        if (cmd.indexOf('await') !== -1 && Config.config.useAsync) {
+          newCmd = await parseAsync(cmd, context);
+        }
         const result = Config.config.useGlobal ?
           vm.runInThisContext(newCmd) :
           vm.runInContext(newCmd, context);

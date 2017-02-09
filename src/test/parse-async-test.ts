@@ -75,19 +75,4 @@ describe('Test parse async', function () {
     });
   });
 
-  context('when useAsync is false', function () {
-    before(function () {
-      Config.setConfig({ useAsync: false });
-    });
-    after(function () {
-      Config.setConfig({ useAsync: true });
-    })
-
-    it('should not parse Promise.resolve(true)', async function () {
-      const result = await parseAsync('await Promise.resolve(true)', ctx);
-      result.should.equal('await Promise.resolve(true)');
-      ctx.should.eql({
-      });
-    });
-  });
 });
