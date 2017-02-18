@@ -1,9 +1,23 @@
 import Config from './config';
 import * as vm from 'vm';
 
+let regex;
+
+export function getRegex() {
+  if (!regex) {
+    const space = '[\\t\\f\\v ]+';
+    const name = '[^(),\\n\\]\\[]*';
+    const nameWithoutComma = '[^()\\n]*';
+    const nameInParentheses = `(?:\\(${nameWithoutComma}\\))*`;
+    const nameFollowedByParentheses = `\\((?:[^()\\n]|(?:${nameInParentheses}))*\\)`;
+    const nestedParentheses = `\\((?:[^()\\n]|(?:${nameInParentheses}|${nameFollowedByParentheses}))*\\)`;
+    regex = new RegExp(`await${space}((?:${name}(?:${nestedParentheses})*)+)`, 'g');
+  }
+  return regex;
+}
+
 export default async function (cmd: string, context: any) {
-  const yieldableRegex = ///await\s+((?:[a-zA-Z0-9_\.]+)(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\))?)/g;
-                         /await[\t\f\v ]+((:?[^(),\n\]\[]*(?:\((?:[^()\n]|(?:(?:\([^()]*\))*))*\))*)+)/g;
+  const yieldableRegex = getRegex();
   let i = 0;
   let newCmd = cmd;
   let match;
@@ -22,3 +36,5 @@ export default async function (cmd: string, context: any) {
   }
   return newCmd;
 }
+
+
