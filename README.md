@@ -87,7 +87,8 @@ Configuration can be overwitten
 
 ## Using await
 
-If you have a very complicated expression (many nested expresssions) you have to await split it in two expressions:
+If you have a very complicated expression (many nested expresssions) it is better to split it in two expressions:
+
 ```javascript
 // Bad
 await Compicated-Epression
@@ -102,7 +103,7 @@ This way await will work as expected.
 ## Function Parameter Suggestions
 
 When you type a parenthesis repl will try to fiugure out if the previous expression is
-a function and if yes suggest the function's parameters.
+a function suggest its parameters.
 
 ## Build in profiler
 
