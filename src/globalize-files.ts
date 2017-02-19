@@ -30,9 +30,9 @@ export default function (server) {
 
 }
 
-function globalize(context, name, path) {
+export function globalize(context, name, path) {
   name = camelCase(name);
-  if (name && !global[name]) {
+  if (name && !context[name]) {
     Object.defineProperty(context, `$${name}$`, {
       enumerable: false, configurable: true, get: function () {
         return path;
@@ -61,7 +61,7 @@ function globalize(context, name, path) {
   }
 }
 
-function globalizeFiles(context) {
+export function globalizeFiles(context) {
   glob('**/*.js', { ignore: ['**/node_modules/**', '**/test/**'], cwd: root }, function (err, files = []) {
     if (err) {
       return err;
@@ -74,7 +74,7 @@ function globalizeFiles(context) {
   });
 }
 
-function globalizeDependencies(context) {
+export function globalizeDependencies(context) {
   const files = [...Object.keys(packageJson.dependencies || {}), ...Object.keys(packageJson.devDependencies || {})];
   files.forEach(f => globalize(context, f, path.join(root, 'node_modules', f)));
 }

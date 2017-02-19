@@ -21,8 +21,7 @@ $ npm install -g node-nc
 ## Usage
 
 ```bash
-$ node-nc # or
-$ nc
+$ node-nc # or nc
 nc > reload() // reloads all global files
 nc > $module$ // the path that is required when using module
 nc > module   // the module
@@ -87,7 +86,7 @@ Configuration can be overwitten
 
 ## Using await
 
-If you have a very complicated expression (many nested expresssions) it is better to split it in two expressions:
+If you have a very complicated expression (many nested expresssions) it is better to split it in two:
 
 ```javascript
 // Bad
@@ -103,7 +102,7 @@ This way await will work as expected.
 ## Function Parameter Suggestions
 
 When you type a parenthesis repl will try to fiugure out if the previous expression is
-a function suggest its parameters.
+a function and suggest its parameters.
 
 ## Build in profiler
 

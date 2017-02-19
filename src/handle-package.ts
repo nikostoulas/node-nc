@@ -7,7 +7,7 @@ export let isInNodeProject = false;
 export let packageJson: any = {};
 export let name = 'nc> ';
 
-export default function init() {
+function init() {
   if (!Config.config.usePackageFile) {
     return;
   }
