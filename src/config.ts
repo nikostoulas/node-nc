@@ -8,7 +8,8 @@ const defaultConf = {
   useNcFile: true,
   usePackageFile: true,
   writeHistoryFile: true,
-  historyFileName: '.nc_history'
+  historyFileName: '.nc_history',
+  suggestParams: true
 };
 
 const envConf = compact(convertBoolean({
@@ -19,7 +20,8 @@ const envConf = compact(convertBoolean({
   useNcFile: process.env.NC_USE_NC_FILE,
   usePackageFile: process.env.NC_USE_PACKAGE_FILE,
   writeHistoryFile: process.env.NC_WRITE_HISTORY_FILE,
-  historyFileName: process.env.NC_HISTORY_FILE_NAME
+  historyFileName: process.env.NC_HISTORY_FILE_NAME,
+  suggestParams: process.env.NC_SUGGEST_PARAMS
 }));
 
 export default class Config {

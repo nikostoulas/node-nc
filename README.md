@@ -28,8 +28,8 @@ nc > $module$ // the path that is required when using module
 nc > module   // the module
 ```
 
-It is intended to be used inside  Node.js projects.\
-The nc command can also be invoked from a projects subfolder.\
+It is intended to be used inside  Node.js projects.  \
+The nc command can also be invoked from a projects subfolder.  \
 If used outside a project it will not globalize any file and will save history to `~/.nc_history` (`~/${config.historyFileName}).
 
 ![nc](https://raw.githubusercontent.com/nikostoulas/node-nc/master/usage.gif)
@@ -43,6 +43,7 @@ This module extends Node.js [basic repl](https://nodejs.org/api/repl.html) funct
 * Awaits promises (experimental).
 * Writes commands to a local history file.
 * Configurable behavior using env variables or a nc.js file.
+* Suggests params for functions and methods (experimental).
 
 
 ## Configuration
@@ -56,7 +57,8 @@ const defaultConf = {
   useNcFile: true, // Use nc.js file if it exists.
   usePackageFile: true, // Use package file to determine prompt, root folter and dependencies.
   writeHistoryFile: true, // Write all commands to a file.
-  historyFileName: '.nc_history' // The history filename. An absolute path can also be given.
+  historyFileName: '.nc_history', // The history filename. An absolute path can also be given.
+  suggestParams: true // Experimental suggestion of params when calling a function
 };
 ```
 
@@ -66,7 +68,7 @@ Configuration can be overwitten
 
   NC_USE_GLOBAL, NC_USE_ASYNC, NC_GLOBALIZE_FILES,
   NC_GLOBALIZE_DEPENDENCIES, NC_USE_NC_FILE, NC_USE_PACKAGE_FILE,
-  NC_WRITE_HISTORY_FILE, NC_HISTORY_FILE_NAME or
+  NC_WRITE_HISTORY_FILE, NC_HISTORY_FILE_NAME, NC_SUGGEST_PARAMS or
 * by using an nc.js file. This file can also be used to make some project initializations
   Eg. connect to a database, declare some global vars etc.
   In nc.js a method setConfig(options) is available to overwrite the default configurations.
@@ -83,14 +85,29 @@ Configuration can be overwitten
     mongoose.connect(mongooseDb, options, function (err, data) {});
   ```
 
+## Using await
+
+If you have a very complicated expression (many nested expresssions) you have to await split it in two expressions:
+```javascript
+// Bad
+await Compicated-Epression
+
+// Good
+const promise = Complicated-expression
+await promise;
+```
+
+This way await will work as expected.
+
+## Function Parameter Suggestions
+
+When you type a parenthesis repl will try to fiugure out if the previous expression is
+a function and if yes suggest the function's parameters.
+
 ## Build in profiler
 
 Test a function's performance using the buildin profiler.
 The function can return a promise.
-
-The accuracy for sync functions is above 99% when they run less than 1M times/sec.
-
-The accuracy for functions that return a promise is above 99% when they run less than 1K times/sec.
 
 ```bash
 node-nc> profiler(() => fib(10))
