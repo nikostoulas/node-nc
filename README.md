@@ -8,8 +8,8 @@
 ```
 ## About
 
-Have you missed a good [repl](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) while developing a Node.js project?\
-Use node-nc to easily configure your project's console (similar to rails c).\
+Have you missed a good [repl](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) while developing a Node.js project?  
+Use node-nc to easily configure your project's console (similar to rails c).  
 Just type node-nc in any of your project's folder.
 
 ## Installation
@@ -28,9 +28,9 @@ nc > $module$ // the path that is required when using module
 nc > module   // the module
 ```
 
-It is intended to be used inside  Node.js projects.  \
-The nc command can also be invoked from a projects subfolder.  \
-If used outside a project it will not globalize any file and will save history to `~/.nc_history` (`~/${config.historyFileName}).
+It is intended to be used inside  Node.js projects.  
+The nc command can also be invoked from a projects subfolder.  
+If used outside a project it will not globalize any file and will save history to `~/.nc_history` (`~/${config.historyFileName}`).
 
 ![nc](https://raw.githubusercontent.com/nikostoulas/node-nc/master/usage.gif)
 
