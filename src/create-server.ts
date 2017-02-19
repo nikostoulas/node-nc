@@ -4,6 +4,13 @@ import Config from './config';
 import parseAsync from './parse-async';
 import { name } from './handle-package';
 
+export function isRecoverableError(error) {
+  if (error.name === 'SyntaxError') {
+    return /^(Unexpected end of input|Unexpected token|missing)/.test(error.message);
+  }
+  return false;
+}
+
 export default function (prompt = name) {
   return repl.start({
     prompt,
@@ -29,11 +36,4 @@ export default function (prompt = name) {
       }
     }
   });
-
-  function isRecoverableError(error) {
-    if (error.name === 'SyntaxError') {
-      return /^(Unexpected end of input|Unexpected token|missing)/.test(error.message);
-    }
-    return false;
-  }
 }
