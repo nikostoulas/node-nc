@@ -32,7 +32,7 @@ export default function (prompt = name) {
 
   function isRecoverableError(error) {
     if (error.name === 'SyntaxError') {
-      return /^(Unexpected end of input|Unexpected token)/.test(error.message);
+      return /^(Unexpected end of input|Unexpected token|missing)/.test(error.message);
     }
     return false;
   }
