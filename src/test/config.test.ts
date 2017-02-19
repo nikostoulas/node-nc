@@ -14,7 +14,8 @@ describe('Test config', function () {
         useNcFile: true,
         usePackageFile: true,
         writeHistoryFile: true,
-        historyFileName: '.nc_history'
+        historyFileName: '.nc_history',
+        suggestParams: true
       });
     });
   });
@@ -22,7 +23,7 @@ describe('Test config', function () {
   context('when setConfig is used', function () {
     afterEach(function () {
       Config.setConfig({});
-    })
+    });
 
     it('uses set config', async function () {
       Config.setConfig({ useAsync: false });
@@ -34,7 +35,8 @@ describe('Test config', function () {
         useNcFile: true,
         usePackageFile: true,
         writeHistoryFile: true,
-        historyFileName: '.nc_history'
+        historyFileName: '.nc_history',
+        suggestParams: true
       });
     });
   });
