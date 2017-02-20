@@ -85,16 +85,21 @@ describe('Test globalize files', function () {
     });
 
     context('when in a node project and with UseGlobal true', function () {
-      it('should add context nested in nc', async function () {
-        const flag = Config.config.useGlobal;
+      before(function () {
         Config.setConfig({ useGlobal: true });
+      });
+
+      after(function () {
+        Config.setConfig({ useGlobal: false });
+      });
+
+      it('should add context nested in nc', async function () {
         const server: any = { context: {} };
         gf.default(server);
         await new Promise(r => setTimeout(r, 30));
         (typeof server.context.reload).should.equal('function');
         server.context.nc.profiler.should.equal(profiler);
         server.context.nc.glob.should.equal(glob);
-        Config.setConfig({ useGlobal: flag });
       });
     });
 

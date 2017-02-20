@@ -23,13 +23,15 @@ export function getParams(fn: Function) {
   }
 }
 
-export function getFunction(str: string, context) {
-  const regex = /(['"\w_0-9.]+)\([^)\n\]\[]*$/;
+export function getFnStr(str) {
+  const regex = /(['"\w_0-9.()\[\]]+)\([^)\n\]\[]*$/;
   let match = regex.exec(str);
-  let fn;
   if (match && match[1]) {
-    fn = match[1];
+    return match[1];
   }
+}
+
+export function getFn(fn, context) {
   if (fn) {
     return Config.config.useGlobal ?
       vm.runInThisContext(fn) :
@@ -37,8 +39,9 @@ export function getFunction(str: string, context) {
   }
 }
 
-export function fnToString(cmd, context) {
-  const fn = getFunction(cmd, context);
+export function functionToParams(cmd, context) {
+  const fnStr = getFnStr(cmd);
+  const fn = getFn(fnStr, context);
   if (fn) {
     const params = getParams(fn);
     if (Array.isArray(params)) {
@@ -48,7 +51,7 @@ export function fnToString(cmd, context) {
   return '';
 }
 
-function print(str, lastColumn, cursor) {
+export function print(str, lastColumn, cursor) {
   (<any>process.stdout).cursorTo(lastColumn);
   process.stdout.write(`        \x1b[2m\x1b[37m${str}\x1b[0m`);
   (<any>process.stdout).clearLine(1);
@@ -63,7 +66,7 @@ export default function suggest(server) {
     const lastColumn = server.line.length + name.length;
     try {
       if (cmd.indexOf('(') !== -1) {
-        print(fnToString(cmd, server.context), lastColumn, cursor);
+        print(functionToParams(cmd, server.context), lastColumn, cursor);
       }
     } catch (e) {
       print(e.message, lastColumn, cursor);
