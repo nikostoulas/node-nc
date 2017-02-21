@@ -10,6 +10,7 @@ import profiler from '../profiler';
 import * as glob from 'glob';
 import * as sinon from 'sinon';
 import Config from '../config';
+
 const sandbox = sinon.sandbox.create();
 
 describe('Test globalize files', function () {
@@ -47,9 +48,11 @@ describe('Test globalize files', function () {
     });
 
     it('should not override values', function () {
-      const context: any = { test: 'test' };
+      const context: any = { };
+      (<any>global).test = 'test';
       globalize(context, 'test', './test/globalize-files.test.js');
-      context.test.should.eql('test');
+      should.equal(context.test, undefined);
+      delete (<any>global).delete;
     });
   });
 

@@ -32,7 +32,7 @@ export default function (server) {
 
 export function globalize(context, name, path) {
   name = camelCase(name);
-  if (name && !context[name]) {
+  if (name && !global[name]) {
     Object.defineProperty(context, `$${name}$`, {
       enumerable: false, configurable: true, get: function () {
         return path;
