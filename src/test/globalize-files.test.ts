@@ -60,7 +60,7 @@ describe('Test globalize files', function () {
     it('should globalize all project files', async function () {
       const context: any = {};
       globalizeFiles(context);
-      await new Promise(r => setTimeout(r, 30));
+      await new Promise(r => setTimeout(r, 50));
       context.profiler.should.equal(profiler);
       context.$profiler$.should.endWith('build/profiler.js');
     });
