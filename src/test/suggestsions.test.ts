@@ -72,16 +72,20 @@ describe('Test Suggestions', function () {
       const stmnts = [
         'const a = fn(',
         'const b = a.fn(',
-        'const c = a().fn(',
-        'const d = a[0].fn('
+        'const c = a(1, 2).fn(',
+        'const d = a[0].fn(',
+        'const e =  [1, 2, 3].slice(',
+        'const f = new AndoBridge(1, 2).fn('
       ];
       stmnts
         .map(stmnt => getFnStr(stmnt))
         .should.eql([
           'fn',
           'a.fn',
-          'a().fn',
-          'a[0].fn'
+          'a(1, 2).fn',
+          'a[0].fn',
+          '[1, 2, 3].slice',
+          'new AndoBridge(1, 2).fn'
         ]);
     });
 
@@ -89,16 +93,20 @@ describe('Test Suggestions', function () {
       const stmnts = [
         'const a = fn(a,b',
         'const b = a.fn(a,b',
-        'const c = a().fn(a,b',
-        'const d = a[0].fn(a,b'
+        'const c = a(1, 2).fn(a, b',
+        'const d = a[0].fn(a, b, [c]',
+        'const e = [1, 2, 3].slice(a, b, [c]',
+        'const f = new AndoBridge(1, 2).fn( a, b'
       ];
       stmnts
         .map(stmnt => getFnStr(stmnt))
         .should.eql([
           'fn',
           'a.fn',
-          'a().fn',
-          'a[0].fn'
+          'a(1, 2).fn',
+          'a[0].fn',
+          '[1, 2, 3].slice',
+          'new AndoBridge(1, 2).fn'
         ]);
     });
   });

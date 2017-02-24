@@ -24,10 +24,10 @@ export function getParams(fn: Function) {
 }
 
 export function getFnStr(str) {
-  const regex = /(['"\w_0-9.()\[\]]+)\([^)\n\]\[]*$/;
+  const regex = /((?:new\s+[\w_0-9.]+\([^)\n]*\)\.)?['"\w_0-9.()\[\], ]+)\([^)\n]*$/;
   let match = regex.exec(str);
   if (match && match[1]) {
-    return match[1];
+    return match[1].trim();
   }
 }
 
