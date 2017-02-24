@@ -75,7 +75,8 @@ describe('Test Suggestions', function () {
         'const c = a(1, 2).fn(',
         'const d = a[0].fn(',
         'const e =  [1, 2, 3].slice(',
-        'const f = new AndoBridge(1, 2).fn('
+        'const f = new AndoBridge(1, 2).fn(',
+        'const g = new AndoBridge(1'
       ];
       stmnts
         .map(stmnt => getFnStr(stmnt))
@@ -85,7 +86,8 @@ describe('Test Suggestions', function () {
           'a(1, 2).fn',
           'a[0].fn',
           '[1, 2, 3].slice',
-          'new AndoBridge(1, 2).fn'
+          'new AndoBridge(1, 2).fn',
+          'AndoBridge'
         ]);
     });
 
