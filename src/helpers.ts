@@ -31,3 +31,18 @@ export function uniqueKeepLatest(array) {
 export function camelCase(str: string) {
   return str.replace(/-(\w)/g, (_, w: string) => w.toUpperCase());
 }
+
+export function getRegexStrs() {
+  const nameWithComma = '[^()\\n]*';
+  const nameInParentheses = `(?:\\(${nameWithComma}\\))*`;
+  const nameFollowedByParentheses = `\\((?:[^()\\n]|(?:${nameInParentheses}))*\\)`;
+
+  return {
+    space: '[\\t\\f\\v ]+',
+    name: '[^(),\\n\\]\\[]*',
+    nameWithComma,
+    nameInParentheses: `(?:\\(${nameWithComma}\\))*`,
+    nameFollowedByParentheses,
+    nestedParentheses: `\\((?:[^()\\n]|(?:${nameInParentheses}|${nameFollowedByParentheses}))*\\)`
+  };
+}

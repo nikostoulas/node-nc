@@ -98,7 +98,9 @@ describe('Test Suggestions', function () {
         'const c = a(1, 2).fn(a, b',
         'const d = a[0].fn(a, b, [c]',
         'const e = [1, 2, 3].slice(a, b, [c]',
-        'const f = new AndoBridge(1, 2).fn( a, b'
+        'const f = new AndoBridge(1, 2).fn( a, b',
+        'const g = new AndoBridge(1'
+
       ];
       stmnts
         .map(stmnt => getFnStr(stmnt))
@@ -108,7 +110,8 @@ describe('Test Suggestions', function () {
           'a(1, 2).fn',
           'a[0].fn',
           '[1, 2, 3].slice',
-          'new AndoBridge(1, 2).fn'
+          'new AndoBridge(1, 2).fn',
+          'AndoBridge'
         ]);
     });
   });
@@ -118,11 +121,19 @@ describe('Test Suggestions', function () {
       'const a = fn()',
       'const b = a.fn()',
       'const c = a().fn()',
-      'const d = a[0].fn()'
+      'const d = a[0].fn()',
+      'const e = [1, 2, 3].slice(a, b, [c])',
+      'const f = new AndoBridge(1, 2).fn( a, b)',
+      'const g = new AndoBridge(1)',
+      'const h = utils.globalizeProjectFiles()'
     ];
     stmnts
       .map(stmnt => getFnStr(stmnt))
       .should.eql([
+        undefined,
+        undefined,
+        undefined,
+        undefined,
         undefined,
         undefined,
         undefined,

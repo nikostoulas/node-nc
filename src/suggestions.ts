@@ -3,6 +3,8 @@ import { name } from './handle-package';
 import * as vm from 'vm';
 
 const readline = require('readline');
+let regex;
+let helperRegex;
 
 export function getParams(fn: Function) {
   const str = fn.toString();
@@ -24,10 +26,19 @@ export function getParams(fn: Function) {
 }
 
 export function getFnStr(str) {
-  const regex = /((?:new\s+[\w_0-9.]+\([^)\n]*\)\.)?(?:['"\w_0-9.]+|(?:\[[^\]\n]*\][^)\n]+)*)+(?:\([^)\n]*\)[^)\n]+)*)\([^)\n]*$/;
-  let match = regex.exec(str);
-  if (match && match[1]) {
-    return match[1].trim();
+  if (!regex) {
+    regex = new RegExp(`((?:new .*\\))?(?:\\[[^()\\n=\\[\\]]*\\])?\
+(?:[^()\\n= ]*(?:\\((?:[^()\\n]|(?:\\([^()\\n]*\\)))*\\))*)+)\\([^()\\n]*$`);
+  }
+  if (!helperRegex) {
+    helperRegex = new RegExp('\\([^()\\n]*$');
+  }
+  let shouldTry = helperRegex.exec(str);
+  if (shouldTry) {
+    let match = regex.exec(str);
+    if (match && match[1]) {
+      return match[1].trim();
+    }
   }
 }
 

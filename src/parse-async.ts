@@ -1,16 +1,16 @@
 import Config from './config';
 import * as vm from 'vm';
+import { getRegexStrs } from './helpers';
 
 let regex;
 
 export function getRegex() {
   if (!regex) {
-    const space = '[\\t\\f\\v ]+';
-    const name = '[^(),\\n\\]\\[]*';
-    const nameWithoutComma = '[^()\\n]*';
-    const nameInParentheses = `(?:\\(${nameWithoutComma}\\))*`;
-    const nameFollowedByParentheses = `\\((?:[^()\\n]|(?:${nameInParentheses}))*\\)`;
-    const nestedParentheses = `\\((?:[^()\\n]|(?:${nameInParentheses}|${nameFollowedByParentheses}))*\\)`;
+    const {
+      space,
+      name,
+      nestedParentheses
+    } = getRegexStrs();
     regex = new RegExp(`await${space}((?:${name}(?:${nestedParentheses})*)+)`, 'g');
   }
   return regex;
