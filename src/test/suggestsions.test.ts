@@ -186,6 +186,10 @@ describe('Test Suggestions', function () {
       ctx.test = test;
       functionToParams('test(', ctx).should.eql('');
     });
+
+    it('should parse native function', function () {
+      functionToParams('"a".substr(', ctx).should.eql('(from: number, length?: number): string');
+    });
   });
 
   describe('Test print', function () {
