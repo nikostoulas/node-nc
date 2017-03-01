@@ -1,5 +1,4 @@
 import Config from './config';
-import { name } from './handle-package';
 import * as vm from 'vm';
 
 const readline = require('readline');
@@ -87,7 +86,7 @@ export function functionToParams(cmd, context) {
 export function print(str, lastColumn, cursor) {
   (<any>process.stdout).cursorTo(lastColumn);
   process.stdout.write(`        \x1b[2m\x1b[37m${str}\x1b[0m`);
-  (<any>process.stdout).clearLine(1);
+  (<any>process.stdout).clearScreenDown();
   (<any>process.stdout).moveCursor(-str.length - 9);
   (<any>process.stdout).cursorTo(cursor);
 }
@@ -95,8 +94,8 @@ export function print(str, lastColumn, cursor) {
 export default function suggest(server) {
   server.input.on('data', data => {
     const cmd = server.line;
-    const cursor = (server.cursor + name.length) % server.columns;
-    const lastColumn = server.line.length + name.length;
+    const cursor = (server.cursor + server._prompt.length) % server.columns;
+    const lastColumn = server.line.length + server._prompt.length;
     try {
       if (cmd.indexOf('(') !== -1) {
         print(functionToParams(cmd, server.context), lastColumn, cursor);
