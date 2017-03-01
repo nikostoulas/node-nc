@@ -14,7 +14,8 @@
     "prepublish": "npm run build && npm test",
     "pretest": "tslint src/*.ts && npm run build",
     "test": "istanbul test ./node_modules/.bin/_mocha build/test -- --recursive -R spec",
-    "posttest": "remap-istanbul -i coverage/coverage.json -o coverage/lcov-report -t html"
+    "posttest": "remap-istanbul -i coverage/coverage.json -o coverage/lcov-report -t html",
+    "preversion": "npm test"
   },
   "bin": {
     "nc": "build/index.js",
