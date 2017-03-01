@@ -23,13 +23,18 @@ describe('Test Create Server', function () {
 
   describe('Test isRecoverableError', function () {
     it('handles unexpected end of input', function () {
-      const error = new SyntaxError('Unexpected end of input')
+      const error = new SyntaxError('Unexpected end of input');
       isRecoverableError(error).should.be.true();
     });
 
     it('handles unexpected token', function () {
       const error = new SyntaxError('Unexpected token }');
       isRecoverableError(error).should.be.true();
+    });
+
+    it('throws error for unknown unexpected token', function () {
+      const error = new SyntaxError('Unexpected token new');
+      isRecoverableError(error).should.be.false();
     });
 
     it('handles missing', function () {

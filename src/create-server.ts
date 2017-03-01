@@ -6,7 +6,7 @@ import { name } from './handle-package';
 
 export function isRecoverableError(error) {
   if (error.name === 'SyntaxError') {
-    return /^(Unexpected end of input|Unexpected token|missing)/.test(error.message);
+    return /^(Unexpected end of input|Unexpected token [()\[\]{}]|missing)/.test(error.message);
   }
   return false;
 }
