@@ -101,7 +101,7 @@ This way await will work as expected.
 
 ## Function Parameter Suggestions
 
-When you type a parenthesis repl will try to fiugure out if the previous expression is
+When you type a parenthesis repl will try to figure out if the previous expression is
 a function and suggest its parameters.
 
 ## Build in profiler
