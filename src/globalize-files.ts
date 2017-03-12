@@ -75,6 +75,10 @@ export function globalizeFiles(context) {
 }
 
 export function globalizeDependencies(context) {
-  const files = [...Object.keys(packageJson.dependencies || {}), ...Object.keys(packageJson.devDependencies || {})];
+  const files = [
+    ...Object.keys(packageJson.dependencies || {}),
+    ...Object.keys(packageJson.devDependencies || {}),
+    ...Object.keys(packageJson.peerDependencies || {})
+  ];
   files.forEach(f => globalize(context, f, path.join(root, 'node_modules', f)));
 }
