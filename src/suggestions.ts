@@ -1,9 +1,9 @@
 import Config from './config';
+import { runWithTimeout } from './vm';
 import * as vm from 'vm';
 
 const readline = require('readline');
 let regex;
-let helperRegex;
 
 const nativeFunctions = {
   [String.prototype.substr.toString()]: '(from: number, length?: number): string',
@@ -47,15 +47,9 @@ export function getFnStr(str) {
     regex = new RegExp(`((?:new .*\\))?(?:\\[[^()\\n=\\[\\]]*\\])?\
 (?:[^()\\n= ]*(?:\\((?:[^()\\n]|(?:\\([^()\\n]*\\)))*\\))*)+)\\([^()\\n]*$`);
   }
-  if (!helperRegex) {
-    helperRegex = new RegExp('\\([^()\\n]*$');
-  }
-  let shouldTry = helperRegex.exec(str);
-  if (shouldTry) {
-    let match = regex.exec(str);
-    if (match && match[1]) {
-      return match[1].trim();
-    }
+  let match = runWithTimeout(() => regex.exec(str), 100);
+  if (match && match[1]) {
+    return match[1].trim();
   }
 }
 
