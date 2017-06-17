@@ -227,6 +227,18 @@ describe('Test Suggestions', function () {
       ]);
     });
 
+    it('should not call print', function () {
+      const cursorToStub = sandbox.stub(process.stdout, 'cursorTo');
+      const writeStub = sandbox.stub(process.stdout, 'write');
+      const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
+      const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
+      const server = { input: { on: sandbox.stub() }, context: ctx, line: ';"a".toString(', columns: 90, cursor: 10, _prompt: '>' };
+      suggest(server);
+      server.input.on.calledOnce.should.be.true();
+      server.input.on.args[0][1]('test(');
+      writeStub.called.should.be.false();
+    });
+
     it('should call print with error', function () {
       const cursorToStub = sandbox.stub(process.stdout, 'cursorTo');
       const writeStub = sandbox.stub(process.stdout, 'write');

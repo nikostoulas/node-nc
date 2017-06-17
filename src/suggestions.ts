@@ -20,22 +20,22 @@ const nativeFunctions = {
   [Array.prototype.fill.toString()]: '(value: T, start?: number, end?: number): this',
   [Object.keys.toString()]: '(o: any): string[]',
   [Object.defineProperties.toString()]: '(o: any, properties: PropertyDescriptorMap)',
-  [Object.defineProperty.toString()]: '(o: any, p: string, attributes: PropertyDescriptor)',
+  [Object.defineProperty.toString()]: '(o: any, p: string, attributes: PropertyDescriptor)'
 };
 
 export function getParams(fn: Function) {
   const str = fn.toString();
   let match;
   if (str.startsWith('class')) {
-    match = str.replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/mg, '')
-      .match(/constructor\s*[^\(]*\(\s*([^\)]*)\)/m);
+    match = str.replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/gm, '').match(/constructor\s*[^\(]*\(\s*([^\)]*)\)/m);
     if (!match && (<any>fn).__proto__) {
-      match = (<any>fn).__proto__.toString().replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/mg, '')
+      match = (<any>fn).__proto__
+        .toString()
+        .replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/gm, '')
         .match(/constructor\s*[^\(]*\(\s*([^\)]*)\)/m);
     }
   } else {
-    match = str.replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/mg, '')
-      .match(/^(?:function)?\s*[^\(]*\(\s*([^\)]*)\)/m);
+    match = str.replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/gm, '').match(/^(?:function)?\s*[^\(]*\(\s*([^\)]*)\)/m);
   }
   if (match) {
     return (match[1] || '').split(/,/);
@@ -44,8 +44,10 @@ export function getParams(fn: Function) {
 
 export function getFnStr(str) {
   if (!regex) {
-    regex = new RegExp(`((?:new .*\\))?(?:\\[[^()\\n=\\[\\]]*\\])?\
-(?:[^()\\n= ]*(?:\\((?:[^()\\n]|(?:\\([^()\\n]*\\)))*\\))*)+)\\([^()\\n]*$`);
+    regex = new RegExp(
+      `((?:new .*\\))?(?:\\[[^()\\n=\\[\\]]*\\])?\
+(?:[^()\\n= ]*(?:\\((?:[^()\\n]|(?:\\([^()\\n]*\\)))*\\))*)+)\\([^()\\n]*$`
+    );
   }
   let match = runWithTimeout(() => regex.exec(str), 100);
   if (match && match[1]) {
@@ -55,9 +57,7 @@ export function getFnStr(str) {
 
 export function getFn(fn, context) {
   if (fn) {
-    return Config.config.useGlobal ?
-      vm.runInThisContext(fn) :
-      vm.runInContext(fn, context);
+    return Config.config.useGlobal ? vm.runInThisContext(fn) : vm.runInContext(fn, context);
   }
 }
 
@@ -91,7 +91,7 @@ export default function suggest(server) {
     const cursor = (server.cursor + server._prompt.length) % server.columns;
     const lastColumn = server.line.length + server._prompt.length;
     try {
-      if (cmd.indexOf('(') !== -1) {
+      if (cmd.indexOf('(') !== -1 && cmd.indexOf(';') === -1) {
         print(functionToParams(cmd, server.context), lastColumn, cursor);
       }
     } catch (e) {
