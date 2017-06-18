@@ -77,25 +77,23 @@ export function functionToParams(cmd, context) {
   return '';
 }
 
-export function print(str, lastColumn, cursor) {
-  (<any>process.stdout).cursorTo(lastColumn);
+export function print(str, remainingCmd) {
+  process.stdout.write(remainingCmd);
   process.stdout.write(`        \x1b[2m\x1b[37m${str}\x1b[0m`);
   (<any>process.stdout).clearScreenDown();
-  (<any>process.stdout).moveCursor(-str.length - 9);
-  (<any>process.stdout).cursorTo(cursor);
+  (<any>process.stdout).moveCursor(-remainingCmd.length - str.length - 8);
 }
 
 export default function suggest(server) {
   server.input.on('data', data => {
     const cmd = server.line;
-    const cursor = (server.cursor + server._prompt.length) % server.columns;
-    const lastColumn = server.line.length + server._prompt.length;
+    const remainingCmd = cmd.substring(server.cursor, server.line.length);
     try {
       if (cmd.indexOf('(') !== -1 && cmd.indexOf(';') === -1) {
-        print(functionToParams(cmd, server.context), lastColumn, cursor);
+        print(functionToParams(cmd, server.context), remainingCmd);
       }
     } catch (e) {
-      print(e.message, lastColumn, cursor);
+      print(e.message, remainingCmd);
     }
   });
 }

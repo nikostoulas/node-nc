@@ -194,20 +194,16 @@ describe('Test Suggestions', function () {
 
   describe('Test print', function () {
     it('should call process stdout functions', function () {
-      const cursorToStub = sandbox.stub(process.stdout, 'cursorTo');
       const writeStub = sandbox.stub(process.stdout, 'write');
       const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
       const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
-      print('test', 10, 5);
-      cursorToStub.args.should.eql([
-        [10],
-        [5]
-      ]);
+      print('test', '');
       writeStub.args.should.eql([
+        [''],
         ['        \x1b[2m\x1b[37mtest\x1b[0m']
       ]);
       moveCursorStub.args.should.eql([
-        [-13]
+        [-12]
       ]);
     });
   });
@@ -218,11 +214,12 @@ describe('Test Suggestions', function () {
       const writeStub = sandbox.stub(process.stdout, 'write');
       const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
       const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
-      const server = { input: { on: sandbox.stub() }, context: ctx, line: '"a".toString(', columns: 90, cursor: 10, _prompt: '>' };
+      const server = { input: { on: sandbox.stub() }, context: ctx, line: '"a".toString(', columns: 90, cursor: 14, _prompt: '>' };
       suggest(server);
       server.input.on.calledOnce.should.be.true();
-      server.input.on.args[0][1]('test(');
+      server.input.on.args[0][1]('"a".toString(');
       writeStub.args.should.eql([
+        [''],
         ['        \u001b[2m\u001b[37m()\u001b[0m']
       ]);
     });
@@ -232,7 +229,7 @@ describe('Test Suggestions', function () {
       const writeStub = sandbox.stub(process.stdout, 'write');
       const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
       const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
-      const server = { input: { on: sandbox.stub() }, context: ctx, line: ';"a".toString(', columns: 90, cursor: 10, _prompt: '>' };
+      const server = { input: { on: sandbox.stub() }, context: ctx, line: ';"a".toString(', columns: 90, cursor: 11, _prompt: '>' };
       suggest(server);
       server.input.on.calledOnce.should.be.true();
       server.input.on.args[0][1]('test(');
@@ -244,11 +241,12 @@ describe('Test Suggestions', function () {
       const writeStub = sandbox.stub(process.stdout, 'write');
       const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
       const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
-      const server = { input: { on: sandbox.stub() }, context: ctx, line: 'a.toString(', columns: 90, cursor: 10, _prompt: '>' };
+      const server = { input: { on: sandbox.stub() }, context: ctx, line: 'a.toString(', columns: 90, cursor: 11, _prompt: '>' };
       suggest(server);
       server.input.on.calledOnce.should.be.true();
-      server.input.on.args[0][1]('test(');
+      server.input.on.args[0][1]('a.toString(');
       writeStub.args.should.eql([
+        [''],
         ['        \u001b[2m\u001b[37ma is not defined\u001b[0m']
       ]);
     });
