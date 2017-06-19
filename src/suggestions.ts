@@ -90,6 +90,9 @@ export function print(str, remainingCmd, cursor, columns) {
 }
 
 export default function suggest(server) {
+  if (!Config.config.suggestParams) {
+    return;
+  }
   server.input.on('data', data => {
     const cmd = server.line;
     const cursor = server.cursor + server._prompt.length;
