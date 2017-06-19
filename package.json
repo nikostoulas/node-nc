@@ -46,7 +46,7 @@
     "should": "11.2.0",
     "sinon": "1.17.7",
     "source-map-support": "0.4.11",
-    "tslint": "4.4.2",
+    "tslint": "^4.4.2",
     "typescript": "2.3.4"
   }
 }

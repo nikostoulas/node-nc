@@ -77,23 +77,30 @@ export function functionToParams(cmd, context) {
   return '';
 }
 
-export function print(str, remainingCmd) {
+export function print(str, remainingCmd, cursor, columns) {
   process.stdout.write(remainingCmd);
+  const move = remainingCmd.length + str.length + 8;
+  const lastColumn = (move + cursor - 1) % columns + 1;
   process.stdout.write(`        \x1b[2m\x1b[37m${str}\x1b[0m`);
   (<any>process.stdout).clearScreenDown();
-  (<any>process.stdout).moveCursor(-remainingCmd.length - str.length - 8);
+  (<any>process.stdout).moveCursor(
+    (lastColumn < move ? Math.ceil((move - lastColumn) / columns) * columns : 0) - move,
+    lastColumn < move ? -Math.ceil((move - lastColumn) / columns) : 0
+  );
 }
 
 export default function suggest(server) {
   server.input.on('data', data => {
     const cmd = server.line;
+    const cursor = server.cursor + server._prompt.length;
+    const columns = server.columns;
     const remainingCmd = cmd.substring(server.cursor, server.line.length);
     try {
       if (cmd.indexOf('(') !== -1 && cmd.indexOf(';') === -1) {
-        print(functionToParams(cmd, server.context), remainingCmd);
+        print(functionToParams(cmd, server.context), remainingCmd, cursor, columns);
       }
     } catch (e) {
-      print(e.message, remainingCmd);
+      print(e.message, remainingCmd, cursor, columns);
     }
   });
 }
