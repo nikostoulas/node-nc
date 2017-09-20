@@ -8,6 +8,8 @@
 ```
 ## About
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nikostoulas/node-nc.svg)](https://greenkeeper.io/)
+
 Have you missed a good [repl](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) while developing a Node.js project?  
 Use node-nc to easily configure your project's console (similar to rails c).  
 Just type node-nc in any of your project's folder.
