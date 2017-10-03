@@ -41,7 +41,7 @@
     "@types/source-map-support": "0.4.0",
     "@types/supertest": "2.0.3",
     "istanbul": "0.4.5",
-    "mocha": "3.5.3",
+    "mocha": "4.0.0",
     "remap-istanbul": "0.9.5",
     "should": "13.1.0",
     "sinon": "3.3.0",
