@@ -35,7 +35,7 @@
   "devDependencies": {
     "@types/log4js": "0.0.33",
     "@types/mocha": "2.2.43",
-    "@types/node": "8.0.31",
+    "@types/node": "8.0.32",
     "@types/should": "11.2.0",
     "@types/sinon": "2.3.5",
     "@types/source-map-support": "0.4.0",
