@@ -44,7 +44,7 @@
     "mocha": "4.0.0",
     "remap-istanbul": "0.9.5",
     "should": "13.1.1",
-    "sinon": "3.3.0",
+    "sinon": "4.1.1",
     "source-map-support": "0.5.0",
     "tslint": "^5.7.0",
     "typescript": "2.5.3"
