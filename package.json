@@ -39,7 +39,7 @@
     "@types/should": "11.2.0",
     "@types/sinon": "4.0.0",
     "@types/source-map-support": "0.4.0",
-    "@types/supertest": "2.0.3",
+    "@types/supertest": "2.0.4",
     "istanbul": "0.4.5",
     "mocha": "4.0.0",
     "remap-istanbul": "0.9.5",
