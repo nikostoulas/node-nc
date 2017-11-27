@@ -47,6 +47,6 @@
     "sinon": "4.1.2",
     "source-map-support": "0.5.0",
     "tslint": "^5.7.0",
-    "typescript": "2.6.1"
+    "typescript": "2.6.2"
   }
 }
