@@ -36,7 +36,7 @@
     "@types/log4js": "2.3.5",
     "@types/mocha": "2.2.44",
     "@types/node": "8.0.57",
-    "@types/should": "11.2.0",
+    "@types/should": "13.0.0",
     "@types/sinon": "4.1.0",
     "@types/source-map-support": "0.4.0",
     "@types/supertest": "2.0.4",
