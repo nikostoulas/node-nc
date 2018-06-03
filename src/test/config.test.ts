@@ -1,9 +1,6 @@
-import parseAsync from '../parse-async';
 import Config from '../config';
 
 describe('Test config', function() {
-  let ctx;
-
   context('when no env variable is set', function() {
     it('should return default env', async function() {
       Config.config.should.eql({

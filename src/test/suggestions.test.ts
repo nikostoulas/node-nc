@@ -1,6 +1,5 @@
 import Config from '../config';
 import { getParams, getFnStr, getFn, functionToParams, print, default as suggest } from '../suggestions';
-import * as suggestions from '../suggestions';
 import * as vm from 'vm';
 import * as sinon from 'sinon';
 const sandbox = sinon.sandbox.create();
@@ -195,7 +194,7 @@ describe('Test Suggestions', function() {
   describe('Test print', function() {
     it('should call process stdout functions', function() {
       const writeStub = sandbox.stub(process.stdout, 'write');
-      const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
+      sandbox.stub(process.stdout, 'clearScreenDown');
       const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
       print('test', '', 10, 70);
       writeStub.args.should.eql([[''], ['        \x1b[2m\x1b[37mtest\x1b[0m']]);
@@ -204,7 +203,7 @@ describe('Test Suggestions', function() {
 
     it('should call process stdout functions and move to previous line', function() {
       const writeStub = sandbox.stub(process.stdout, 'write');
-      const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
+      sandbox.stub(process.stdout, 'clearScreenDown');
       const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
       print('test', 'test2', 10, 20);
       writeStub.args.should.eql([['test2'], ['        \x1b[2m\x1b[37mtest\x1b[0m']]);
@@ -213,7 +212,7 @@ describe('Test Suggestions', function() {
 
     it('should call process stdout functions and move two previous lines', function() {
       const writeStub = sandbox.stub(process.stdout, 'write');
-      const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
+      sandbox.stub(process.stdout, 'clearScreenDown');
       const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
       print('test', 'test-test-test-test-test-test-', 10, 20);
       writeStub.args.should.eql([['test-test-test-test-test-test-'], ['        \x1b[2m\x1b[37mtest\x1b[0m']]);
@@ -223,10 +222,9 @@ describe('Test Suggestions', function() {
 
   describe('Test suggest', function() {
     it('should call print with output of functionToParams', function() {
-      const cursorToStub = sandbox.stub(process.stdout, 'cursorTo');
       const writeStub = sandbox.stub(process.stdout, 'write');
-      const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
-      const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
+      sandbox.stub(process.stdout, 'clearScreenDown');
+      sandbox.stub(process.stdout, 'moveCursor');
       const server = {
         input: { on: sandbox.stub() },
         context: ctx,
@@ -242,10 +240,9 @@ describe('Test Suggestions', function() {
     });
 
     it('should not call print', function() {
-      const cursorToStub = sandbox.stub(process.stdout, 'cursorTo');
       const writeStub = sandbox.stub(process.stdout, 'write');
-      const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
-      const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
+      sandbox.stub(process.stdout, 'clearScreenDown');
+      sandbox.stub(process.stdout, 'moveCursor');
       const server = {
         input: { on: sandbox.stub() },
         context: ctx,
@@ -261,10 +258,9 @@ describe('Test Suggestions', function() {
     });
 
     it('should call print with error', function() {
-      const cursorToStub = sandbox.stub(process.stdout, 'cursorTo');
       const writeStub = sandbox.stub(process.stdout, 'write');
-      const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
-      const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
+      sandbox.stub(process.stdout, 'clearScreenDown');
+      sandbox.stub(process.stdout, 'moveCursor');
       const server = {
         input: { on: sandbox.stub() },
         context: ctx,
@@ -280,10 +276,9 @@ describe('Test Suggestions', function() {
     });
 
     it('should do nothing', function() {
-      const cursorToStub = sandbox.stub(process.stdout, 'cursorTo');
       const writeStub = sandbox.stub(process.stdout, 'write');
-      const clearScreenDownStub = sandbox.stub(process.stdout, 'clearScreenDown');
-      const moveCursorStub = sandbox.stub(process.stdout, 'moveCursor');
+      sandbox.stub(process.stdout, 'clearScreenDown');
+      sandbox.stub(process.stdout, 'moveCursor');
       const server = {
         input: { on: sandbox.stub() },
         context: ctx,

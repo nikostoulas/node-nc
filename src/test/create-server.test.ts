@@ -102,7 +102,7 @@ describe('Test Create Server', function() {
     context('when an error occurs', function() {
       it('should return recoverable error', async function() {
         const error = new SyntaxError('missing ) after argument list');
-        const runStub = sandbox.stub(vm, 'runInContext').throws(error);
+        sandbox.stub(vm, 'runInContext').throws(error);
         createServer();
         await replStartStub.args[0][0].eval('1', ctx, '', cb);
         cb.args[0][0].should.eql(new (<any>repl).Recoverable(error));
@@ -110,7 +110,7 @@ describe('Test Create Server', function() {
 
       it('should return error', async function() {
         const error = new Error('test error');
-        const runStub = sandbox.stub(vm, 'runInContext').throws(error);
+        sandbox.stub(vm, 'runInContext').throws(error);
         createServer();
         await replStartStub.args[0][0].eval('1', ctx, '', cb);
         cb.args[0][0].should.eql(error);

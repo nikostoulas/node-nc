@@ -9,9 +9,13 @@
     "declaration": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "./build",
-    "sourceMap": true
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "pretty": true,
+    "noEmitOnError": true
   },
-  "filesGlob": [
-    "./*.ts"
-  ]
+  "include": ["./**/*.ts"]
 }

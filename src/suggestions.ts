@@ -2,7 +2,6 @@ import Config from './config';
 import { runWithTimeout } from './vm';
 import * as vm from 'vm';
 
-const readline = require('readline');
 let regex;
 
 const nativeFunctions = {
@@ -82,8 +81,8 @@ export function print(str, remainingCmd, cursor, columns) {
   const move = remainingCmd.length + str.length + 8;
   const lastColumn = (move + cursor - 1) % columns + 1;
   process.stdout.write(`        \x1b[2m\x1b[37m${str}\x1b[0m`);
-  (<any>process.stdout).clearScreenDown();
-  (<any>process.stdout).moveCursor(
+  process.stdout.clearScreenDown();
+  process.stdout.moveCursor(
     (lastColumn < move ? Math.ceil((move - lastColumn) / columns) * columns : 0) - move,
     lastColumn < move ? -Math.ceil((move - lastColumn) / columns) : 0
   );
@@ -106,4 +105,13 @@ export default function suggest(server) {
       print(e.message, remainingCmd, cursor, columns);
     }
   });
+}
+
+declare global {
+  namespace NodeJS {
+    interface WriteStream {
+      clearScreenDown: Function;
+      moveCursor: Function;
+    }
+  }
 }
