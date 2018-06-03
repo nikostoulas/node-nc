@@ -3,6 +3,7 @@ import * as glob from 'glob';
 import { root, packageJson, isInNodeProject } from './handle-package';
 import * as path from 'path';
 import { camelCase } from './helpers';
+import importNc from './import-nc';
 
 export default function(server) {
   if (!isInNodeProject) {
@@ -11,6 +12,7 @@ export default function(server) {
 
   server.context.reload = () => {
     Object.keys(require.cache).forEach(key => delete require.cache[key]);
+    importNc();
     return true;
   };
 
@@ -29,7 +31,7 @@ export default function(server) {
   }
 }
 
-export function globalize(context, name, path) {
+export function globalize(context, name: string, path) {
   name = camelCase(name);
   if (name && !global[name]) {
     Object.defineProperty(context, `$${name}$`, {
@@ -65,14 +67,16 @@ export function globalize(context, name, path) {
 }
 
 export function globalizeFiles(context) {
+  const filenameRegexp = new RegExp('^/?(?:.+/)*(.+)\\.(?:.+)$');
   glob('**/*.js', { ignore: ['**/node_modules/**', '**/test/**'], cwd: root }, function(err, files = []) {
     if (err) {
       return err;
     }
-    const filenameRegexp = new RegExp('^/?(?:.+/)*(.+)\\.(?:.+)$');
     files.forEach(f => {
-      const filename = filenameRegexp.exec(f)[1];
-      globalize(context, filename, path.join(root, f));
+      const filename = filenameRegexp.exec(f) && filenameRegexp.exec(f)![1];
+      if (filename) {
+        globalize(context, filename, path.join(root, f));
+      }
     });
   });
 }

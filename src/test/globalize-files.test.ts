@@ -105,7 +105,7 @@ describe('Test globalize files', function() {
       it('should add context', async function() {
         const server: any = { context: {} };
         gf.default(server);
-        await new Promise(r => setTimeout(r, 30));
+        await new Promise(r => setTimeout(r, 100));
         (typeof server.context.reload).should.equal('function');
         server.context.profiler.should.equal(profiler);
         server.context.glob.should.equal(glob);

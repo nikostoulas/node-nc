@@ -6,8 +6,18 @@ import { root } from './handle-package';
 export default function() {
   if (Config.config.useNcFile) {
     if (fs.existsSync('./nc.js')) {
-      (<any>global).setConfig = Config.setConfig.bind(Config);
+      global.setConfig = Config.setConfig.bind(Config);
       require(path.join(root, 'nc.js'));
+    }
+  }
+}
+
+declare global {
+  const setConfig: Function;
+
+  namespace NodeJS {
+    interface Global {
+      setConfig: Function;
     }
   }
 }
