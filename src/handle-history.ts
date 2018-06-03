@@ -16,21 +16,20 @@ function getHistoryPath() {
 }
 
 function saveHistory(historyFile, server) {
-  let allLines = fs.readFileSync(historyFile)
+  let allLines = fs
+    .readFileSync(historyFile)
     .toString()
     .split(`\n`);
 
   allLines = uniqueKeepLatest(allLines.concat(server.lines));
 
-  fs.writeFileSync(historyFile,
-    allLines
-      .filter(line => line.trim()).join('\n') + '\n');
+  fs.writeFileSync(historyFile, allLines.filter(line => line.trim()).join('\n') + '\n');
 }
 
 export default function handle(server) {
   if (!Config.config.writeHistoryFile) {
     return;
-  };
+  }
 
   const historyFile = getHistoryPath();
 
@@ -38,16 +37,15 @@ export default function handle(server) {
     fs.writeFileSync(historyFile, '');
   }
 
-  fs.readFileSync(historyFile)
+  fs
+    .readFileSync(historyFile)
     .toString()
     .split(`\n`)
     .reverse()
     .filter(line => line.trim())
     .map(line => server.history.push(line));
 
-
   process.on('exit', () => saveHistory(historyFile, server));
   process.on('SIGINT', () => process.exit(1));
   process.on('uncaughtException', e => console.error(e) || process.exit(1));
-
 }

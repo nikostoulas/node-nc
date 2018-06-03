@@ -4,13 +4,13 @@ import { root, packageJson, isInNodeProject } from './handle-package';
 import * as path from 'path';
 import { camelCase } from './helpers';
 
-export default function (server) {
+export default function(server) {
   if (!isInNodeProject) {
     return;
   }
 
   server.context.reload = () => {
-    Object.keys(require.cache).forEach((key) => delete require.cache[key]);
+    Object.keys(require.cache).forEach(key => delete require.cache[key]);
     return true;
   };
 
@@ -27,19 +27,22 @@ export default function (server) {
   if (Config.config.globalizeDependencies) {
     globalizeDependencies(context);
   }
-
 }
 
 export function globalize(context, name, path) {
   name = camelCase(name);
   if (name && !global[name]) {
     Object.defineProperty(context, `$${name}$`, {
-      enumerable: false, configurable: true, get: function () {
+      enumerable: false,
+      configurable: true,
+      get: function() {
         return path;
       }
     });
     Object.defineProperty(context, name, {
-      enumerable: false, configurable: true, get: function () {
+      enumerable: false,
+      configurable: true,
+      get: function() {
         try {
           let required = require(path);
 
@@ -53,7 +56,7 @@ export function globalize(context, name, path) {
           console.error(e);
         }
       },
-      set: function (value) {
+      set: function(value) {
         delete context[name];
         delete context[`$${name}$`];
       }
@@ -62,11 +65,11 @@ export function globalize(context, name, path) {
 }
 
 export function globalizeFiles(context) {
-  glob('**/*.js', { ignore: ['**/node_modules/**', '**/test/**'], cwd: root }, function (err, files = []) {
+  glob('**/*.js', { ignore: ['**/node_modules/**', '**/test/**'], cwd: root }, function(err, files = []) {
     if (err) {
       return err;
     }
-    const filenameRegexp = new RegExp('^\/?(?:.+\/)*(.+)\\.(?:.+)$');
+    const filenameRegexp = new RegExp('^/?(?:.+/)*(.+)\\.(?:.+)$');
     files.forEach(f => {
       const filename = filenameRegexp.exec(f)[1];
       globalize(context, filename, path.join(root, f));

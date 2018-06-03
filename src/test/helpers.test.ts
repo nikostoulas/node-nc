@@ -1,13 +1,8 @@
-import {
-  compact,
-  convertBoolean,
-  uniqueKeepLatest,
-  camelCase
-} from '../helpers';
+import { compact, convertBoolean, uniqueKeepLatest, camelCase } from '../helpers';
 
-describe('Test helpers', function () {
-  describe('Test compact', function () {
-    it('should remove undefined high level keys', function () {
+describe('Test helpers', function() {
+  describe('Test compact', function() {
+    it('should remove undefined high level keys', function() {
       compact({
         one: 1,
         two: '2',
@@ -27,8 +22,8 @@ describe('Test helpers', function () {
     });
   });
 
-  describe('Test convertBoolean', function () {
-    it('should convert string values to boolean', function () {
+  describe('Test convertBoolean', function() {
+    it('should convert string values to boolean', function() {
       convertBoolean({
         one: 1,
         true: 'true',
@@ -41,24 +36,14 @@ describe('Test helpers', function () {
     });
   });
 
-  describe('Test uniqueKeepLatest', function () {
-    it('should keep last unique value from array', function () {
-      uniqueKeepLatest([
-        'one',
-        'two',
-        'one',
-        'three',
-        'three'
-      ]).should.eql([
-        'two',
-        'one',
-        'three'
-      ]);
+  describe('Test uniqueKeepLatest', function() {
+    it('should keep last unique value from array', function() {
+      uniqueKeepLatest(['one', 'two', 'one', 'three', 'three']).should.eql(['two', 'one', 'three']);
     });
   });
 
-  describe('Test camelcase', function () {
-    it('should camelCase string that has dashes', function () {
+  describe('Test camelcase', function() {
+    it('should camelCase string that has dashes', function() {
       camelCase('a-b-c-d-e').should.equal('aBCDE');
       camelCase('a-bc-de').should.equal('aBcDe');
     });

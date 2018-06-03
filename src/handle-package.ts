@@ -19,7 +19,7 @@ function init() {
     } else {
       isInNodeProject = true;
       packageJson = require(path.join(root, 'package.json'));
-      return name = packageJson.name + '> ';
+      return (name = packageJson.name + '> ');
     }
   } while (root !== path.sep);
 }

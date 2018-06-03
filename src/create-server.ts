@@ -11,22 +11,20 @@ export function isRecoverableError(error) {
   return false;
 }
 
-export default function (prompt = name) {
+export default function(prompt = name) {
   return repl.start({
     prompt,
     input: process.stdin,
     output: process.stdout,
     replMode: (<any>repl).REPL_MODE_MAGIC,
     useGlobal: Config.config.useGlobal,
-    eval: async function (cmd, context, filename, callback) {
+    eval: async function(cmd, context, filename, callback) {
       try {
         let newCmd = cmd;
         if (cmd.indexOf('await') !== -1 && Config.config.useAsync) {
           newCmd = await parseAsync(cmd, context);
         }
-        const result = Config.config.useGlobal ?
-          vm.runInThisContext(newCmd) :
-          vm.runInContext(newCmd, context);
+        const result = Config.config.useGlobal ? vm.runInThisContext(newCmd) : vm.runInContext(newCmd, context);
         callback(null, result);
       } catch (e) {
         if (isRecoverableError(e)) {
