@@ -80,7 +80,7 @@ Configuration can be overwitten
   ```javascript
 
     // overwrite useGlobal
-    setEnv({ useGlobal:true });.
+    setConfig({ useGlobal:true });.
 
     // connect to db
     mongoose.connect(mongooseDb, options, function (err, data) {});
