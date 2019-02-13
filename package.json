@@ -33,7 +33,7 @@
   },
   "typings": "build/index",
   "devDependencies": {
-    "@types/mocha": "2.2.44",
+    "@types/mocha": "5.2.6",
     "@types/node": "10.3.0",
     "@types/should": "11.2.0",
     "@types/sinon": "4.3.1",
