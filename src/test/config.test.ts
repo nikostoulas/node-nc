@@ -12,7 +12,8 @@ describe('Test config', function() {
         usePackageFile: true,
         writeHistoryFile: true,
         historyFileName: '.nc_history',
-        suggestParams: true
+        suggestParams: true,
+        onExit: false
       });
     });
   });
@@ -33,7 +34,8 @@ describe('Test config', function() {
         usePackageFile: true,
         writeHistoryFile: true,
         historyFileName: '.nc_history',
-        suggestParams: true
+        suggestParams: true,
+        onExit: false
       });
     });
   });

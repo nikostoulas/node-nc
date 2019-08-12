@@ -3,6 +3,7 @@ import * as repl from 'repl';
 import { isRecoverableError, default as createServer } from '../create-server';
 import Config from '../config';
 import * as parseAsync from '../parse-async';
+import * as EventEmitter from 'events';
 
 import * as sinon from 'sinon';
 const sandbox = sinon.sandbox.create();
@@ -43,8 +44,11 @@ describe('Test Create Server', function() {
   describe('Test createServer', function() {
     let replStartStub;
     let cb;
+    let emitterMock;
     beforeEach(function() {
-      replStartStub = sandbox.stub(repl, 'start');
+      const EventEmitter = require('events');
+      emitterMock = new EventEmitter();
+      replStartStub = sandbox.stub(repl, 'start').returns(emitterMock);
       cb = sandbox.stub();
     });
 
@@ -114,6 +118,36 @@ describe('Test Create Server', function() {
         createServer();
         await replStartStub.args[0][0].eval('1', ctx, '', cb);
         cb.args[0][0].should.eql(error);
+      });
+    });
+  });
+
+  describe('Test onExit hook', () => {
+    let emitterMock;
+    beforeEach(function() {
+      sandbox.stub(process, 'exit');
+      emitterMock = new EventEmitter();
+      sandbox.stub(repl, 'start').returns(emitterMock);
+    });
+
+    after(function() {
+      Config.setConfig({ onExit: false });
+    });
+
+    context('when the onExit hook is configured', () => {
+      it('should run the onExit hook before repl exists', () => {
+        const onExit = sandbox.stub();
+        Config.setConfig({ onExit });
+        createServer();
+        emitterMock.emit('exit');
+        sandbox.assert.calledOnce(onExit);
+      });
+    });
+    context('when the onExit hook is not a function', () => {
+      it('should be ignored', () => {
+        Config.setConfig({ onExit: 'just a string' });
+        createServer();
+        emitterMock.emit('exit');
       });
     });
   });

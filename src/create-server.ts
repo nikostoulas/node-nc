@@ -12,7 +12,7 @@ export function isRecoverableError(error) {
 }
 
 export default function(prompt = name) {
-  return repl.start({
+    const server = repl.start({
     prompt,
     input: process.stdin,
     output: process.stdout,
@@ -34,4 +34,18 @@ export default function(prompt = name) {
       }
     }
   });
+  server.on('exit', () => {
+    let onExit = Config.config.onExit || (() => {/* */});
+    if (typeof onExit !== 'function') {
+        onExit = () => { console.error('The `onExit` hook is not a function!'); };
+    }
+    Promise.resolve(onExit())
+      .then(() => {
+        process.exit();
+      })
+      .catch(() => {
+        process.exit();
+      });
+  });
+  return server;
 }
