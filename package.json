@@ -28,7 +28,7 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "glob": "^7.1.1",
+    "glob": "^7.1.6",
     "performance-now": "^2.0.0"
   },
   "typings": "build/index",
