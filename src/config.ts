@@ -9,7 +9,8 @@ const defaultConf = {
   usePackageFile: true,
   writeHistoryFile: true,
   historyFileName: '.nc_history',
-  suggestParams: true
+  suggestParams: true,
+  onExit: false
 };
 
 const envConf = compact(
