@@ -5,16 +5,30 @@ import * as path from 'path';
 import { camelCase } from './helpers';
 import importNc from './import-nc';
 
-export default function(server) {
+export default function (server) {
   if (!isInNodeProject) {
     return;
   }
 
-  server.context.reload = () => {
-    Object.keys(require.cache).forEach(key => delete require.cache[key]);
-    importNc();
+  server.context.reload = (loadNc = false) => {
+    Object.keys(require.cache).forEach((key) => delete require.cache[key]);
+    if (loadNc) {
+      importNc();
+    }
     return true;
   };
+
+  server.defineCommand('reload', {
+    help: 'Reloads global files',
+    action(loadNc = 'false') {
+      this.clearBufferedCommand();
+      Object.keys(require.cache).forEach((key) => delete require.cache[key]);
+      if (loadNc === 'true') {
+        importNc();
+      }
+      this.displayPrompt();
+    }
+  });
 
   let context = server.context;
   if (Config.config.useGlobal) {
@@ -37,14 +51,14 @@ export function globalize(context, name: string, path) {
     Object.defineProperty(context, `$${name}$`, {
       enumerable: false,
       configurable: true,
-      get: function() {
+      get: function () {
         return path;
       }
     });
     Object.defineProperty(context, name, {
       enumerable: false,
       configurable: true,
-      get: function() {
+      get: function () {
         try {
           let required = require(path);
 
@@ -58,7 +72,7 @@ export function globalize(context, name: string, path) {
           console.error(e);
         }
       },
-      set: function(value) {
+      set: function (value) {
         delete context[name];
         delete context[`$${name}$`];
       }
@@ -68,11 +82,11 @@ export function globalize(context, name: string, path) {
 
 export function globalizeFiles(context) {
   const filenameRegexp = new RegExp('^/?(?:.+/)*(.+)\\.(?:.+)$');
-  glob('**/*.js', { ignore: ['**/node_modules/**', '**/test/**'], cwd: root }, function(err, files = []) {
+  glob('**/*.js', { ignore: ['**/node_modules/**', '**/test/**'], cwd: root }, function (err, files = []) {
     if (err) {
       return err;
     }
-    files.forEach(f => {
+    files.forEach((f) => {
       const filename = filenameRegexp.exec(f) && filenameRegexp.exec(f)![1];
       if (filename) {
         globalize(context, filename, path.join(root, f));
@@ -87,5 +101,5 @@ export function globalizeDependencies(context) {
     ...Object.keys(packageJson.devDependencies || {}),
     ...Object.keys(packageJson.peerDependencies || {})
   ];
-  files.forEach(f => globalize(context, f, path.join(root, 'node_modules', f)));
+  files.forEach((f) => globalize(context, f, path.join(root, 'node_modules', f)));
 }
