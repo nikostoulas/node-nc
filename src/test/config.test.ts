@@ -5,7 +5,7 @@ describe('Test config', function() {
     it('should return default env', async function() {
       Config.config.should.eql({
         useGlobal: false,
-        useAsync: true,
+        useAsync: false,
         globalizeFiles: true,
         globalizeDependencies: true,
         useNcFile: true,

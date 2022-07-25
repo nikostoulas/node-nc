@@ -2,7 +2,7 @@ import { compact, convertBoolean } from './helpers';
 
 const defaultConf = {
   useGlobal: false,
-  useAsync: true,
+  useAsync: false,
   globalizeFiles: true,
   globalizeDependencies: true,
   useNcFile: true,
