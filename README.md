@@ -24,7 +24,8 @@ $ npm install -g node-nc
 
 ```bash
 $ node-nc # or nc
-nc > reload() // reloads all global files
+nc > reload(false) // reloads all global files without reload nc by default
+nc > .reload false // same as above
 nc > $module$ // the path that is required when using module
 nc > module   // the module
 ```
