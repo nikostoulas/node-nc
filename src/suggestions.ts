@@ -83,7 +83,9 @@ export function print(str, remainingCmd, cursor, columns) {
   const move = remainingCmd.length + str.length + 8;
   const lastColumn = ((move + cursor - 1) % columns) + 1;
   process.stdout.write(`        \x1b[2m\x1b[37m${str}\x1b[0m`);
-  process.stdout.clearScreenDown();
+  if (process.stdout.clearScreenDown) {
+    process.stdout.clearScreenDown();
+  }
   process.stdout.moveCursor(
     (lastColumn < move ? Math.ceil((move - lastColumn) / columns) * columns : 0) - move,
     lastColumn < move ? -Math.ceil((move - lastColumn) / columns) : 0
