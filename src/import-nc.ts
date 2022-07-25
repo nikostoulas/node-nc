@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { root } from './handle-package';
 
-export default function() {
+export default function () {
   if (Config.config.useNcFile) {
     if (fs.existsSync('./nc.js')) {
       global.setConfig = Config.setConfig.bind(Config);
@@ -12,6 +12,7 @@ export default function() {
   }
 }
 
+declare var global: NodeJS.Global & typeof globalThis;
 declare global {
   const setConfig: Function;
 

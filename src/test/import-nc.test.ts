@@ -4,12 +4,12 @@ const sandbox = sinon.sandbox.create();
 import * as fs from 'fs';
 import * as should from 'should';
 
-describe('test import-nc', function() {
-  afterEach(function() {
+describe('test import-nc', function () {
+  afterEach(function () {
     sandbox.restore();
   });
 
-  it('should ', async function() {
+  it('should ', function () {
     sandbox.stub(fs, 'existsSync').returns(true);
     should.throws(importNc);
   });

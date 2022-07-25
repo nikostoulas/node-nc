@@ -14,8 +14,10 @@ const nativeFunctions = {
   [Array.prototype.concat.toString()]: '(...items: T[][]): T[]',
   [Array.prototype.filter.toString()]: '(callbackfn: (value: T, index: number, array: T[]) => any, thisArg?: any): T[]',
   [Array.prototype.map.toString()]: '(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[]',
-  [Array.prototype.forEach.toString()]: '(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void',
-  [Array.prototype.find.toString()]: '(predicate: (value: T, index: number, obj: Array<T>) => boolean, thisArg?: any): T | undefined',
+  [Array.prototype.forEach.toString()]:
+    '(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void',
+  [Array.prototype.find.toString()]:
+    '(predicate: (value: T, index: number, obj: Array<T>) => boolean, thisArg?: any): T | undefined',
   [Array.prototype.fill.toString()]: '(value: T, start?: number, end?: number): this',
   [Object.keys.toString()]: '(o: any): string[]',
   [Object.defineProperties.toString()]: '(o: any, properties: PropertyDescriptorMap)',
@@ -48,7 +50,7 @@ export function getFnStr(str) {
 (?:[^()\\n= ]*(?:\\((?:[^()\\n]|(?:\\([^()\\n]*\\)))*\\))*)+)\\([^()\\n]*$`
     );
   }
-  let match = runWithTimeout(() => regex.exec(str), 100);
+  let match: any = runWithTimeout(() => regex.exec(str), 100);
   if (match && match[1]) {
     return match[1].trim();
   }
@@ -79,7 +81,7 @@ export function functionToParams(cmd, context) {
 export function print(str, remainingCmd, cursor, columns) {
   process.stdout.write(remainingCmd);
   const move = remainingCmd.length + str.length + 8;
-  const lastColumn = (move + cursor - 1) % columns + 1;
+  const lastColumn = ((move + cursor - 1) % columns) + 1;
   process.stdout.write(`        \x1b[2m\x1b[37m${str}\x1b[0m`);
   process.stdout.clearScreenDown();
   process.stdout.moveCursor(
@@ -92,7 +94,7 @@ export default function suggest(server) {
   if (!Config.config.suggestParams) {
     return;
   }
-  server.input.on('data', data => {
+  server.input.on('data', (data) => {
     const cmd = server.line;
     const cursor = server.cursor + server._prompt.length;
     const columns = server.columns;
@@ -105,13 +107,4 @@ export default function suggest(server) {
       print(e.message, remainingCmd, cursor, columns);
     }
   });
-}
-
-declare global {
-  namespace NodeJS {
-    interface WriteStream {
-      clearScreenDown: Function;
-      moveCursor: Function;
-    }
-  }
 }
