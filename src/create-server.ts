@@ -11,14 +11,15 @@ export function isRecoverableError(error) {
   return false;
 }
 
-export default function(prompt = name) {
-    const server = repl.start({
+export default function (prompt = name) {
+  const server = repl.start({
     prompt,
     input: process.stdin,
     output: process.stdout,
-    replMode: (<any>repl).REPL_MODE_MAGIC,
+    replMode: (<any>repl).REPL_MODE_SLOPPY,
+    preview: true,
     useGlobal: Config.config.useGlobal,
-    eval: async function(cmd, context, filename, callback) {
+    eval: async function (cmd, context, filename, callback) {
       try {
         let newCmd = cmd;
         if (cmd.indexOf('await') !== -1 && Config.config.useAsync) {
@@ -28,16 +29,22 @@ export default function(prompt = name) {
         callback(null, result);
       } catch (e) {
         if (isRecoverableError(e)) {
-          return callback(new (<any>repl).Recoverable(e));
+          return callback(new (<any>repl).Recoverable(e), null);
         }
-        callback(e);
+        callback(e, null);
       }
     }
   });
   server.on('exit', () => {
-    let onExit = Config.config.onExit || (() => {/* */});
+    let onExit =
+      Config.config.onExit ||
+      (() => {
+        /* */
+      });
     if (typeof onExit !== 'function') {
-        onExit = () => { console.error('The `onExit` hook is not a function!'); };
+      onExit = () => {
+        console.error('The `onExit` hook is not a function!');
+      };
     }
     Promise.resolve(onExit())
       .then(() => {
