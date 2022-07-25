@@ -9,6 +9,9 @@ describe('Test Suggestions', function () {
 
   beforeEach(function () {
     ctx = vm.createContext();
+    if (!process.stdout.moveCursor) {
+      process.stdout.moveCursor = (() => ({})) as any;
+    }
   });
 
   afterEach(function () {
