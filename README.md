@@ -52,7 +52,7 @@ This module extends Node.js [basic repl](https://nodejs.org/api/repl.html) funct
 ```javascript
 const defaultConf = {
   useGlobal: false, // Repl useGlobal. If set to true all globals will be inside nc namespace.
-  useAsync: true, // Experimental use of await in repl.
+  useAsync: false, // Experimental use of await in repl for node versions that don't support top level await.
   globalizeFiles: true, // Make all project files global.
   globalizeDependencies: true, // Globalize projects dependencies.
   useNcFile: true, // Use nc.js file if it exists.
