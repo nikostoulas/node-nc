@@ -2,7 +2,7 @@ import Config from '../config';
 import { getParams, getFnStr, getFn, functionToParams, print, default as suggest } from '../suggestions';
 import * as vm from 'vm';
 import * as sinon from 'sinon';
-const sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 
 describe('Test Suggestions', function () {
   let ctx;

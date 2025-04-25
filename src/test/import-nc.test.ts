@@ -1,6 +1,6 @@
 import importNc from '../import-nc';
 import * as sinon from 'sinon';
-const sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 import * as fs from 'fs';
 import * as should from 'should';
 

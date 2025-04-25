@@ -7,7 +7,7 @@ import * as glob from 'glob';
 import * as sinon from 'sinon';
 import Config from '../config';
 
-const sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 
 describe('Test globalize files', function () {
   afterEach(function () {

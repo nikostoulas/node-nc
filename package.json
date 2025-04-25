@@ -13,8 +13,7 @@
     "watch": "rm -rf ./build && tsc -w -p .",
     "prepublish": "npm run build && npm test",
     "pretest": "tslint src/*.ts && npm run build",
-    "test": "istanbul test ./node_modules/.bin/_mocha build/test -- --recursive -R spec",
-    "posttest": "remap-istanbul -i coverage/coverage.json -o coverage/lcov-report -t html",
+    "test": "nyc mocha build/test -- --recursive -R spec",
     "preversion": "npm test"
   },
   "bin": {
@@ -34,18 +33,16 @@
   "typings": "build/index",
   "devDependencies": {
     "@types/mocha": "2.2.44",
-    "@types/node": "18.6.1",
-    "@types/should": "11.2.0",
+    "@types/node": "^22.15.2",
     "@types/sinon": "4.3.1",
     "@types/source-map-support": "0.4.2",
     "@types/supertest": "2.0.4",
-    "istanbul": "0.4.5",
-    "mocha": "^6.0.0",
-    "remap-istanbul": "0.8.4",
-    "should": "11.2.0",
-    "sinon": "5.0.10",
+    "mocha": "^10.8.2",
+    "nyc": "^17.1.0",
+    "should": "^13.2.3",
+    "sinon": "^20.0.0",
     "source-map-support": "0.5.11",
     "tslint": "5.10.0",
-    "typescript": "4.7.4"
+    "typescript": "^5.8.3"
   }
 }
