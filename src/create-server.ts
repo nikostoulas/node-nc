@@ -19,6 +19,7 @@ export default function (prompt = name) {
     replMode: (<any>repl).REPL_MODE_SLOPPY,
     preview: true,
     useGlobal: Config.config.useGlobal,
+    breakEvalOnSigint: !Config.config.useAsync,
     eval:
       (Config.config.useAsync &&
         async function (cmd, context, filename, callback) {

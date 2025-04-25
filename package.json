@@ -14,6 +14,7 @@
     "prepublish": "npm run build && npm test",
     "pretest": "tslint src/*.ts && npm run build",
     "test": "nyc mocha build/test -- --recursive -R spec",
+    "posttest": "nyc report --reporter=html --reporter=lcov --reporter=text-summary && nyc check-coverage --statements 75 --branches 75 --functions 65 --lines 80",
     "preversion": "npm test"
   },
   "bin": {

@@ -6,7 +6,7 @@ import * as parseAsync from '../parse-async';
 import * as EventEmitter from 'events';
 
 import * as sinon from 'sinon';
-const sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 
 describe('Test Create Server', function () {
   let ctx;
@@ -86,6 +86,36 @@ describe('Test Create Server', function () {
         cb.args.should.containDeep([[null, 1]]);
       });
     });
+
+    context('when useAsync is false', function () {
+      before(function () {
+        Config.setConfig({ useAsync: false });
+      });
+
+      after(function () {
+        Config.setConfig({ useAsync: true });
+      });
+
+      it('should not parseAsync', async function () {
+        const parseAsyncStub = sandbox.stub(parseAsync, 'default').returns(1);
+        createServer();
+        parseAsyncStub.called.should.be.false();
+      });
+
+      it('should pass  breakEvalOnSigint true', async function () {
+        createServer();
+        replStartStub.args.should.eql([[{
+          breakEvalOnSigint: true,
+          eval: undefined,
+          input: process.stdin,
+          output: process.stdout,
+          preview: true,
+          prompt: 'node-nc> ',
+          useGlobal: false,
+          replMode: repl.REPL_MODE_SLOPPY
+        }]]);
+      });
+    })
 
     context('when useGlobal is false', function () {
       it('should runInContext', async function () {
